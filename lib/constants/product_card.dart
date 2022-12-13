@@ -22,7 +22,6 @@ Widget CardBuilder({required BuildContext context}){
           child: Column(
             children: [
               Container(
-                width: 150.w,
                 height: 120.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topRight: Radius.circular(10.r), topLeft: Radius.circular(10.r)),
@@ -33,7 +32,6 @@ Widget CardBuilder({required BuildContext context}){
                 ),
               ),
               Container(
-                width: 130.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.r), bottomLeft: Radius.circular(10.r)),
                 ),

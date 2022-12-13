@@ -1,12 +1,10 @@
 import 'package:carousel_nullsafety/carousel_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/product_card.dart';
 import '../all categories/all_categories_screen.dart';
 import '../notification/notification_screen.dart';
-import '../product details/product_details_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {

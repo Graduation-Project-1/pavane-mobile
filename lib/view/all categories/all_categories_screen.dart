@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/colors.dart';
+import '../products by category/product_by_category_screen.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
 
@@ -149,37 +150,42 @@ class Men extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Material(
-                borderRadius: BorderRadius.circular(10.r),
-                elevation: 3,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/test.jpg'),
-                            fit: BoxFit.cover
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductByCategoryScreen())));
+                },
+                child: Material(
+                  borderRadius: BorderRadius.circular(10.r),
+                  elevation: 3,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: const DecorationImage(
+                              image: AssetImage('assets/images/test.jpg'),
+                              fit: BoxFit.cover
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        color: const Color.fromRGBO(0, 0, 0, .22)
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                          "T-Shirts",
-                        style: TextStyle(
-                          color: white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30.sp
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          color: const Color.fromRGBO(0, 0, 0, .22)
                         ),
                       ),
-                    ),
-                  ],
+                      Center(
+                        child: Text(
+                            "T-Shirts",
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.sp
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -203,37 +209,42 @@ class Women extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Material(
-                borderRadius: BorderRadius.circular(10.r),
-                elevation: 3,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/dress.png'),
-                            fit: BoxFit.cover
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductByCategoryScreen())));
+                },
+                child: Material(
+                  borderRadius: BorderRadius.circular(10.r),
+                  elevation: 3,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.r),
-                          color: const Color.fromRGBO(0, 0, 0, .22)
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        "Dresses",
-                        style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30.sp
+                          image: const DecorationImage(
+                              image: AssetImage('assets/images/dress.png'),
+                              fit: BoxFit.cover
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: const Color.fromRGBO(0, 0, 0, .22)
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          "Dresses",
+                          style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30.sp
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -257,37 +268,42 @@ class Kids extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Material(
-                borderRadius: BorderRadius.circular(10.r),
-                elevation: 3,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/kids_dress.png'),
-                            fit: BoxFit.cover
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductByCategoryScreen())));
+                },
+                child: Material(
+                  borderRadius: BorderRadius.circular(10.r),
+                  elevation: 3,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.r),
-                          color: const Color.fromRGBO(0, 0, 0, .22)
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        "Dress",
-                        style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30.sp
+                          image: const DecorationImage(
+                              image: AssetImage('assets/images/kids_dress.png'),
+                              fit: BoxFit.cover
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: const Color.fromRGBO(0, 0, 0, .22)
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          "Dress",
+                          style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30.sp
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
