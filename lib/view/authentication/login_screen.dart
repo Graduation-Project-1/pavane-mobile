@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/view/authentication/register_screen.dart';
-import 'package:pavane/view/home/home_screen.dart';
 import '../../constants/colors.dart';
 import '../bottom nav bar/bottom_nav_bar_screen.dart';
 import 'forget_screen.dart';
@@ -10,6 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
