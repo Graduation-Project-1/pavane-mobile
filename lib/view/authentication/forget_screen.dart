@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../constants/colors/colors.dart';
+import '../../constants/colors.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
 
@@ -10,6 +10,7 @@ class ForgetPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -51,6 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   child: TextFormField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
+                    cursorColor: depOrange,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'please enter your email address';

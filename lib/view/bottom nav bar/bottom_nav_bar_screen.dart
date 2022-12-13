@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pavane/constants/colors/colors.dart';
+import 'package:pavane/constants/colors.dart';
 import 'package:pavane/view/home/home_screen.dart';
 import 'package:pavane/view/library/library_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -73,7 +73,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     ];
   }
 
-  PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+  final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {

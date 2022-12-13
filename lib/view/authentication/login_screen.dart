@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/view/authentication/register_screen.dart';
 import 'package:pavane/view/home/home_screen.dart';
-import '../../constants/colors/colors.dart';
+import '../../constants/colors.dart';
 import '../bottom nav bar/bottom_nav_bar_screen.dart';
 import 'forget_screen.dart';
 
@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -56,6 +57,7 @@ class LoginScreen extends StatelessWidget {
                   child: TextFormField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
+                    cursorColor: depOrange,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'please enter your email address';
@@ -93,6 +95,7 @@ class LoginScreen extends StatelessWidget {
                   child: TextFormField(
                     controller: passwordController,
                     keyboardType: TextInputType.emailAddress,
+                    cursorColor: depOrange,
                     obscureText: true,
                     validator: (value) {
                       if (value!.isEmpty) {

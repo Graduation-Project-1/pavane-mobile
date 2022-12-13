@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/view/authentication/login_screen.dart';
 
-import '../../constants/colors/colors.dart';
+import '../../constants/colors.dart';
 import '../bottom nav bar/bottom_nav_bar_screen.dart';
 import '../home/home_screen.dart';
 
@@ -42,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -57,429 +58,435 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 165.h,),
-                Text(
-                  "Create Account",
-                  style: TextStyle(
-                    fontSize: 35.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  elevation: 3,
-                  child: TextFormField(
-                    controller: nameController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please enter your name';
-                      }
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
-                      hintText: "Name",
-                      prefixIcon: const Icon(
-                        Icons.person_outline,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      hintStyle: TextStyle(
-                        fontSize: 20.sp,
-                        color: const Color.fromRGBO(98, 98, 98, 1),
-                      ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 165.h,),
+                  Text(
+                    "Create Account",
+                    style: TextStyle(
+                      fontSize: 35.sp,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  elevation: 3,
-                  child: TextFormField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please enter your email address';
-                      }
-                      else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
-                        return 'please enter correct email';
-                      }
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
-                      hintText: "Email",
-                      prefixIcon: const Icon(
-                        Icons.alternate_email,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      hintStyle: TextStyle(
-                        fontSize: 20.sp,
-                        color: const Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  elevation: 3,
-                  child: TextFormField(
-                    controller: passwordController,
-                    keyboardType: TextInputType.emailAddress,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please enter your password';
-                      }
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
-                      hintText: "Password",
-                      prefixIcon: const Icon(
-                        Icons.lock_outlined,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      suffixIcon: const Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      hintStyle: TextStyle(
-                        fontSize: 20.sp,
-                        color: const Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  elevation: 3,
-                  child: TextFormField(
-                    controller: confirmPasswordController,
-                    keyboardType: TextInputType.emailAddress,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please enter your password';
-                      }
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
-                      hintText: "Confirm Password",
-                      prefixIcon: const Icon(
-                        Icons.lock_outlined,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      suffixIcon: const Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                      hintStyle: TextStyle(
-                        fontSize: 20.sp,
-                        color: const Color.fromRGBO(98, 98, 98, 1),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.h,),
-                Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  elevation: 3,
-                  child: DropdownButtonFormField2(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    isExpanded: true,
-                    hint: Row(
-                      children: [
-                        Image.asset("assets/images/gender.png", scale: 4.sp,),
-                        SizedBox(width: 15.w,),
-                        Text(
-                          'Select Your Gender',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: const Color.fromRGBO(98, 98, 98, 1),
-                          ),
+                  SizedBox(height: 10.h,),
+                  Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 3,
+                    child: TextFormField(
+                      controller: nameController,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: depOrange,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter your name';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
                         ),
-                      ],
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                        hintText: "Name",
+                        prefixIcon: const Icon(
+                          Icons.person_outline,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                      ),
                     ),
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: Color.fromRGBO(98, 98, 98, 1),
+                  ),
+                  SizedBox(height: 10.h,),
+                  Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 3,
+                    child: TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: depOrange,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter your email address';
+                        }
+                        else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                          return 'please enter correct email';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                        hintText: "Email",
+                        prefixIcon: const Icon(
+                          Icons.alternate_email,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                      ),
                     ),
-                    iconSize: 30,
-                    buttonHeight: 50,
-                    buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  SizedBox(height: 10.h,),
+                  Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 3,
+                    child: TextFormField(
+                      controller: passwordController,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: depOrange,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter your password';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                        hintText: "Password",
+                        prefixIcon: const Icon(
+                          Icons.lock_outlined,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        suffixIcon: const Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                      ),
                     ),
-                    items: genderItems
-                        .map((item) =>
-                        DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
+                  ),
+                  SizedBox(height: 10.h,),
+                  Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 3,
+                    child: TextFormField(
+                      controller: confirmPasswordController,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: depOrange,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter your password';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                        ),
+                        contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                        hintText: "Confirm Password",
+                        prefixIcon: const Icon(
+                          Icons.lock_outlined,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        suffixIcon: const Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(98, 98, 98, 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h,),
+                  Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    elevation: 3,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      isExpanded: true,
+                      hint: Row(
+                        children: [
+                          Image.asset("assets/images/gender.png", scale: 4.sp,),
+                          SizedBox(width: 15.w,),
+                          Text(
+                            'Select Your Gender',
                             style: TextStyle(
                               fontSize: 20.sp,
+                              color: const Color.fromRGBO(98, 98, 98, 1),
                             ),
                           ),
-                        ))
-                        .toList(),
-                    onSaved: (value) {
-                      gender = value.toString();
-                    },
-                    onChanged: (value){},
+                        ],
+                      ),
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        color: Color.fromRGBO(98, 98, 98, 1),
+                      ),
+                      iconSize: 30,
+                      buttonHeight: 50,
+                      buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      items: genderItems
+                          .map((item) =>
+                          DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ))
+                          .toList(),
+                      onSaved: (value) {
+                        gender = value.toString();
+                      },
+                      onChanged: (value){},
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.r),
-                        elevation: 3,
-                        child: CustomDropdownButton2(
-                          hint: 'Day',
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_outlined,
-                            color: Color.fromRGBO(98, 98, 98, 1),
-                          ),
-                          buttonHeight: 40.h,
-                          iconSize: 25.sp,
-                          dropdownWidth: 110.w,
-                          buttonDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.transparent),
-                              color: white,
-                          ),
-                          dropdownItems: dayList,
-                          value: day,
-                          onChanged: (value) {
-                            setState(() {
-                              day = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 15.h,),
-                    Expanded(
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.r),
-                        elevation: 3,
-                        child: CustomDropdownButton2(
-                          hint: 'Month',
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_outlined,
-                            color: Color.fromRGBO(98, 98, 98, 1),
-                          ),
-                          buttonHeight: 40.h,
-                          iconSize: 25.sp,
-                          dropdownWidth: 110.w,
-                          buttonDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.transparent),
-                              color: white,
-                          ),
-                          dropdownItems: monthList,
-                          value: month,
-                          onChanged: (value) {
-                            setState(() {
-                              month = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 15.h,),
-                    Expanded(
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.r),
-                        elevation: 3,
-                        child: CustomDropdownButton2(
-                          hint: 'Year',
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_outlined,
-                            color: Color.fromRGBO(98, 98, 98, 1),
-                          ),
-                          buttonHeight: 40.h,
-                          iconSize: 25.sp,
-                          dropdownWidth: 110.w,
-                          buttonDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.transparent),
-                            color: white
-                          ),
-                          dropdownItems: yearsList,
-                          value: day,
-                          onChanged: (value) {
-                            setState(() {
-                              day = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 25.h,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.w),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(depOrange),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
+                  SizedBox(height: 10.h,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10.r),
+                          elevation: 3,
+                          child: CustomDropdownButton2(
+                            hint: 'Day',
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_outlined,
+                              color: Color.fromRGBO(98, 98, 98, 1),
+                            ),
+                            buttonHeight: 40.h,
+                            iconSize: 25.sp,
+                            dropdownWidth: 110.w,
+                            buttonDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
-                            )
-                        )
-                    ),
-                    onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => BottomNavBarScreen())));
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
-                      child: Text(
-                          "SIGN UP",
-                          style: TextStyle(
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.bold
+                              border: Border.all(color: Colors.transparent),
+                                color: white,
+                            ),
+                            dropdownItems: dayList,
+                            value: day,
+                            onChanged: (value) {
+                              setState(() {
+                                day = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 15.h,),
+                      Expanded(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10.r),
+                          elevation: 3,
+                          child: CustomDropdownButton2(
+                            hint: 'Month',
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_outlined,
+                              color: Color.fromRGBO(98, 98, 98, 1),
+                            ),
+                            buttonHeight: 40.h,
+                            iconSize: 25.sp,
+                            dropdownWidth: 110.w,
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: Colors.transparent),
+                                color: white,
+                            ),
+                            dropdownItems: monthList,
+                            value: month,
+                            onChanged: (value) {
+                              setState(() {
+                                month = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 15.h,),
+                      Expanded(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10.r),
+                          elevation: 3,
+                          child: CustomDropdownButton2(
+                            hint: 'Year',
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_outlined,
+                              color: Color.fromRGBO(98, 98, 98, 1),
+                            ),
+                            buttonHeight: 40.h,
+                            iconSize: 25.sp,
+                            dropdownWidth: 110.w,
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: Colors.transparent),
+                              color: white
+                            ),
+                            dropdownItems: yearsList,
+                            value: day,
+                            onChanged: (value) {
+                              setState(() {
+                                day = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25.h,),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 60.w),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor: MaterialStateProperty.all<Color>(depOrange),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              )
                           )
                       ),
+                      onPressed: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => BottomNavBarScreen())));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.h),
+                        child: Text(
+                            "SIGN UP",
+                            style: TextStyle(
+                                fontSize: 25.sp,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 25.h,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 1.h,
-                        color: black,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.w),
-                      child: Text(
-                        "Or continue with",
-                        style: TextStyle(
-                            fontSize: 15.sp
+                  SizedBox(height: 25.h,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 1.h,
+                          color: black,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 1.h,
-                        color: black,
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.w),
+                        child: Text(
+                          "Or continue with",
+                          style: TextStyle(
+                              fontSize: 15.sp
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 25.h,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: (){
+                      Expanded(
+                        child: Container(
+                          height: 1.h,
+                          color: black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25.h,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: (){
 
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: depOrange),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                          child: Image.asset("assets/images/facebook.png"),
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: Border.all(color: depOrange),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                            child: Image.asset("assets/images/facebook.png"),
+                          ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: (){
+                      InkWell(
+                        onTap: (){
 
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: depOrange),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                          child: Image.asset("assets/images/google.png"),
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: Border.all(color: depOrange),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                            child: Image.asset("assets/images/google.png"),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account?",
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                      ),
-                    ),
-                    SizedBox(width: 5.w,),
-                    InkWell(
-                      onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
-                      },
-                      child: Text(
-                        "Sign in",
+                    ],
+                  ),
+                  SizedBox(height: 40.h,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
                         style: TextStyle(
                           fontSize: 15.sp,
-                          color: depOrange,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.h,),
-              ],
+                      SizedBox(width: 5.w,),
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
+                        },
+                        child: Text(
+                          "Sign in",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: depOrange,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.h,),
+                ],
+              ),
             ),
           ),
         ],

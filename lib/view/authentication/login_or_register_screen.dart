@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/view/authentication/login_screen.dart';
 import 'package:pavane/view/authentication/register_screen.dart';
-import '../../constants/colors/colors.dart';
+import '../../constants/colors.dart';
 
 class LoginOrRegisterScreen extends StatelessWidget {
 
@@ -10,6 +10,7 @@ class LoginOrRegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -52,7 +53,7 @@ class LoginOrRegisterScreen extends StatelessWidget {
             height: 120.h,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 90),
+            padding: EdgeInsets.symmetric(horizontal: 75.w),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
@@ -70,7 +71,7 @@ class LoginOrRegisterScreen extends StatelessWidget {
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r), topRight: Radius.circular(20.r), bottomLeft: Radius.circular(10.r), bottomRight: Radius.circular(20.r))
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         child: Text(
                             "Register",
                           style: TextStyle(
@@ -86,12 +87,8 @@ class LoginOrRegisterScreen extends StatelessWidget {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
                     },
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r), topRight: Radius.circular(20.r), bottomLeft: Radius.circular(10.r), bottomRight: Radius.circular(20.r))
-                      ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                        padding: const EdgeInsets.only(top: 15, bottom: 15, left: 30),
                         child: Text(
                           "Login",
                           style: TextStyle(
