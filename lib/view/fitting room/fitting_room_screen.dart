@@ -13,7 +13,7 @@ class FittingRoomScreen extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              'Fitting Room',
+              'Coming Soon',
               style: TextStyle(
                   color: depOrange,
                   fontSize: 35.sp,

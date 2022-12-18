@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../constants/colors.dart';
 import '../../constants/product_card.dart';
+import '../brand profile/brand_profile_screen.dart';
 import '../search/search_screen.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -276,16 +277,21 @@ class Likes extends StatelessWidget {
             SizedBox(
               height: 85.h,
               child: ListView.separated(
-                itemBuilder: (context, index) => Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  child: Container(
-                    width: 170.w,
-                    height: 80.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/images/zara_logo.png'),
-                          fit: BoxFit.cover
+                itemBuilder: (context, index) => InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen())));
+                  },
+                  child: Material(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: Container(
+                      width: 170.w,
+                      height: 80.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        image: const DecorationImage(
+                            image: AssetImage('assets/images/zara_logo.png'),
+                            fit: BoxFit.cover
+                        ),
                       ),
                     ),
                   ),
