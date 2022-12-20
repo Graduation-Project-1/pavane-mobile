@@ -42,6 +42,14 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   flutter_launcher_icons: ^0.11.0
   carousel_nullsafety: ^0.1.1
+  shared_preferences: ^2.0.15
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
+  dio: ^4.0.6
+  image_picker: ^0.8.6
+  fluttertoast: ^8.1.2
+  conditional_builder_null_safety: ^0.0.6
+
 
 flutter_icons:
   android: "launcher_icon"
