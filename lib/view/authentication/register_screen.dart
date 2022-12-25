@@ -188,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: passwordController,
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: depOrange,
-                            obscureText: true,
+                            obscureText: AppCubit.get(context).isPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'please enter your password';
@@ -209,9 +209,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Icons.lock_outlined,
                                 color: Color.fromRGBO(98, 98, 98, 1),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Color.fromRGBO(98, 98, 98, 1),
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                child: InkWell(
+                                  onTap: (){
+                                    AppCubit.get(context).changePasswordVisibility();
+                                  },
+                                  child: Icon(
+                                    AppCubit.get(context).suffix,
+                                    color: const Color.fromRGBO(248, 153, 54, 1),
+                                  ),
+                                ),
                               ),
                               hintStyle: TextStyle(
                                 fontSize: 20.sp,
@@ -228,7 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: confirmPasswordController,
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: depOrange,
-                            obscureText: true,
+                            obscureText: AppCubit.get(context).isPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'please enter your password';
@@ -249,9 +257,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Icons.lock_outlined,
                                 color: Color.fromRGBO(98, 98, 98, 1),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Color.fromRGBO(98, 98, 98, 1),
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                child: InkWell(
+                                  onTap: (){
+                                    AppCubit.get(context).changePasswordVisibility();
+                                  },
+                                  child: Icon(
+                                    AppCubit.get(context).suffix,
+                                    color: const Color.fromRGBO(248, 153, 54, 1),
+                                  ),
+                                ),
                               ),
                               hintStyle: TextStyle(
                                 fontSize: 20.sp,
@@ -465,10 +481,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: white
                                   ),
                                   dropdownItems: yearsList,
-                                  value: day,
+                                  value: year,
                                   onChanged: (value) {
                                     setState(() {
-                                      day = value;
+                                      year = value;
                                     });
                                   },
                                 ),
@@ -490,6 +506,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 )
                             ),
                             onPressed: (){
+                              print(emailController.text);
                               if(formKey.currentState!.validate()){
                                if(passwordController.text == confirmPasswordController.text){
                                  AppCubit.get(context).Register(
@@ -498,6 +515,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                      password: passwordController.text,
                                      phone: phoneController.text,
                                      dateOfBirth: "$month $day, $year",
+                                     location: addressController.text,
                                      gender: gender.toString(),
                                  );
                                }else{

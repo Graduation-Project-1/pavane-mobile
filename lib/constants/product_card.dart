@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../view/product details/product_details_screen.dart';
 import 'colors.dart';
 
-Widget CardBuilder({required BuildContext context}){
+Widget CardBuilder({required BuildContext context, required String image, required String name, required String price, required String rate, required String id}){
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
     child: InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductDetailsScreen())));
+        Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductDetailsScreen(id))));
       },
       child: Material(
         elevation: 3,
@@ -25,8 +25,8 @@ Widget CardBuilder({required BuildContext context}){
                 height: 120.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topRight: Radius.circular(10.r), topLeft: Radius.circular(10.r)),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/test.jpg'),
+                  image: DecorationImage(
+                      image: NetworkImage(image),
                       fit: BoxFit.cover
                   ),
                 ),
@@ -41,7 +41,7 @@ Widget CardBuilder({required BuildContext context}){
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "name",
+                        name,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: const Color.fromRGBO(101, 101, 101, 1),
@@ -52,7 +52,7 @@ Widget CardBuilder({required BuildContext context}){
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "500 L.E",
+                            "$price L.E",
                             style: TextStyle(
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.bold
@@ -61,7 +61,7 @@ Widget CardBuilder({required BuildContext context}){
                           Row(
                             children: [
                               Text(
-                                "4.5",
+                                rate,
                                 style: TextStyle(
                                     color: depOrange,
                                     fontSize: 13.sp,

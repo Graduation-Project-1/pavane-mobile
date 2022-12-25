@@ -25,14 +25,14 @@ class ProductByCategoryScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: GridView.builder(
-          itemCount: 11,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .85),
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: CardBuilder(context: context),
-          ),
-      ),
+      // body: GridView.builder(
+      //     itemCount: 11,
+      //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .85),
+      //     itemBuilder: (context, index) => Padding(
+      //       padding: const EdgeInsets.all(15.0),
+      //       child: CardBuilder(context: context),
+      //     ),
+      // ),
     );
   }
 }

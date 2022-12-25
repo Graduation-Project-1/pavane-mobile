@@ -178,7 +178,7 @@ class Wishlist extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .85),
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.all(15.0),
-          child: CardBuilder(context: context),
+          // child: CardBuilder(context: context),
         ),
       ),
     );
@@ -256,15 +256,15 @@ class Likes extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15.h,),
-            SizedBox(
-              height: 180.h,
-              child: ListView.separated(
-                itemBuilder: (context, index) => CardBuilder(context: context),
-                separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
+            // SizedBox(
+            //   height: 180.h,
+            //   child: ListView.separated(
+            //     itemBuilder: (context, index) => CardBuilder(context: context),
+            //     separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+            //     itemCount: 10,
+            //     scrollDirection: Axis.horizontal,
+            //   ),
+            // ),
             SizedBox(height: 15.h,),
             Text(
               "Brands",
@@ -313,115 +313,13 @@ class ForYou extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Collections",
-              style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-            SizedBox(height: 15.h,),
-            SizedBox(
-              height: 115.h,
-              child: ListView.separated(
-                itemBuilder: (context, index) => Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      height: 110.h,
-                      width: 160.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        image: const DecorationImage(
-                            image: AssetImage("assets/images/summer.jpg"),
-                            fit: BoxFit.cover
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 110.h,
-                      width: 160.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        gradient: const LinearGradient(
-                          colors: [Color.fromRGBO(255, 255, 255, .42), Color.fromRGBO(128, 128, 128, .42)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "Summer",
-                      style: TextStyle(
-                        color: white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.sp,
-                      ),
-                    ),
-                  ],
-                ),
-                separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-            SizedBox(height: 15.h,),
-            Text(
-              "Products",
-              style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-            SizedBox(height: 15.h,),
-            SizedBox(
-              height: 180.h,
-              child: ListView.separated(
-                itemBuilder: (context, index) => CardBuilder(context: context),
-                separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-            SizedBox(height: 15.h,),
-            Text(
-              "Brands",
-              style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-            SizedBox(height: 15.h,),
-            SizedBox(
-              height: 85.h,
-              child: ListView.separated(
-                itemBuilder: (context, index) => Material(
-                  borderRadius: BorderRadius.circular(10.r),
-                  child: Container(
-                    width: 170.w,
-                    height: 80.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/images/zara_logo.png'),
-                          fit: BoxFit.cover
-                      ),
-                    ),
-                  ),
-                ),
-                separatorBuilder: (context, index) => SizedBox(width: 15.w,),
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-            SizedBox(height: 15.h,),
-          ],
+    return Center(
+      child: Text(
+        'Coming Soon',
+        style: TextStyle(
+            color: depOrange,
+            fontSize: 35.sp,
+            fontFamily: "Roller"
         ),
       ),
     );

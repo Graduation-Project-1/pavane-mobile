@@ -7,17 +7,20 @@ import 'bloc/cubit.dart';
 import 'bloc/state.dart';
 import 'dio/dio_helper.dart';
 import 'view/authentication/login_or_register_screen.dart';
+import 'view/bottom nav bar/bottom_nav_bar_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  var access_token = CacheHelper.getData(key: 'access_token');
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
             builder: (context, child) => MaterialApp(
               title: 'PAVANE',
               debugShowCheckedModeBanner: false,
-              home:  LoginOrRegisterScreen(),
+              home: access_token != null? BottomNavBarScreen() : LoginOrRegisterScreen(),
             ),
           );
         },
