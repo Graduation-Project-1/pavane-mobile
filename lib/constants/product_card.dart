@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../view/product details/product_details_screen.dart';
 import 'colors.dart';
 
-Widget CardBuilder({required BuildContext context, required String image, required String name, required String price, required String rate, required String id}){
+Widget CardBuilder({required BuildContext context, required String image, required String name, required String price, required String rate, required String id, required String brand}){
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
     child: InkWell(
@@ -40,12 +40,24 @@ Widget CardBuilder({required BuildContext context, required String image, requir
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: const Color.fromRGBO(101, 101, 101, 1),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              color: const Color.fromRGBO(101, 101, 101, 1),
+                            ),
+                          ),
+                          Text(
+                            brand,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: const Color.fromRGBO(101, 101, 101, 1),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 5.h,),
                       Row(

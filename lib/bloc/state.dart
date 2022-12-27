@@ -1,5 +1,11 @@
+import '../models/AllBrandsModel.dart';
 import '../models/AllCategoriesModel.dart';
+import '../models/AllCollectionsModel.dart';
 import '../models/AllProductsModel.dart';
+import '../models/BrandModel.dart';
+import '../models/LikedBrandsModel.dart';
+import '../models/LikedCollectionsModel.dart';
+import '../models/LikedProductsModel.dart';
 import '../models/LoginModel.dart';
 import '../models/ProductModel.dart';
 import '../models/RegisterModel.dart';
@@ -83,4 +89,106 @@ class GetProductSuccessState extends AppStates {
 class  GetProductErrorState extends AppStates {
   final String error;
   GetProductErrorState(this.error);
+}
+
+class LikeProductLoadingState extends AppStates {}
+
+class LikeProductSuccessState extends AppStates {}
+
+class  LikeProductErrorState extends AppStates {
+  final String error;
+  LikeProductErrorState(this.error);
+}
+
+class GetPopularProductsLoadingState extends AppStates {}
+
+class GetPopularProductsSuccessState extends AppStates {
+  final AllProductsModel allProductsModel;
+  GetPopularProductsSuccessState(this.allProductsModel);
+}
+
+class  GetPopularProductsErrorState extends AppStates {
+  final String error;
+  GetPopularProductsErrorState(this.error);
+}
+
+class GetLikedProductsLoadingState extends AppStates {}
+
+class GetLikedProductsSuccessState extends AppStates {
+  final LikedProductsModel likedProductsModel;
+  GetLikedProductsSuccessState(this.likedProductsModel);
+}
+
+class  GetLikedProductsErrorState extends AppStates {
+  final String error;
+  GetLikedProductsErrorState(this.error);
+}
+
+class GetPopularBrandsLoadingState extends AppStates {}
+
+class GetPopularBrandsSuccessState extends AppStates {
+  final AllBrandsModel allBrandsModel;
+  GetPopularBrandsSuccessState(this.allBrandsModel);
+}
+
+class  GetPopularBrandsErrorState extends AppStates {
+  final String error;
+  GetPopularBrandsErrorState(this.error);
+}
+
+class GetLikedBrandsLoadingState extends AppStates {}
+
+class GetLikedBrandsSuccessState extends AppStates {
+  final LikedBrandsModel likedBrandsModel;
+  GetLikedBrandsSuccessState(this.likedBrandsModel);
+}
+
+class  GetLikedBrandsErrorState extends AppStates {
+  final String error;
+  GetLikedBrandsErrorState(this.error);
+}
+
+class GetBrandDetailsLoadingState extends AppStates {}
+
+class GetBrandDetailsSuccessState extends AppStates {
+  final BrandModel brandModel;
+  GetBrandDetailsSuccessState(this.brandModel);
+}
+
+class  GetBrandDetailsErrorState extends AppStates {
+  final String error;
+  GetBrandDetailsErrorState(this.error);
+}
+
+class LikeBrandLoadingState extends AppStates {}
+
+class LikeBrandSuccessState extends AppStates {}
+
+class  LikeBrandErrorState extends AppStates {
+  final String error;
+  LikeBrandErrorState(this.error);
+}
+
+class GetPopularCollectionsLoadingState extends AppStates {}
+
+class GetPopularCollectionsSuccessState extends AppStates {
+  final AllCollectionsModel allCollectionsModel;
+  GetPopularCollectionsSuccessState(this.allCollectionsModel);
+}
+
+class  GetPopularCollectionsErrorState extends AppStates {
+  final String error;
+  GetPopularCollectionsErrorState(this.error);
+}
+
+class GetLikedCollectionsLoadingState extends AppStates {}
+
+class GetLikedCollectionsSuccessState extends AppStates {
+  final LikedCollectionsModel likedCollectionsModel;
+  GetLikedCollectionsSuccessState(this.likedCollectionsModel);
+}
+
+class  GetLikedCollectionsErrorState extends AppStates {
+  final String error;
+  GetLikedCollectionsErrorState(this.error);
 }

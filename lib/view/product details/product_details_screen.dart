@@ -1,12 +1,15 @@
+import 'package:carousel_nullsafety/carousel_nullsafety.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pavane/constants/colors.dart';
 import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/product_card.dart';
+import '../../models/AllProductsModel.dart';
 import '../../models/ProductModel.dart';
 
 
@@ -25,36 +28,82 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   _ProductDetailsScreenState(this.product_id);
 
   ProductModel? productModel;
+  bool get_details = false;
+  AllProductsModel? allProductsModel;
+  bool get_products = false;
 
   var access_token = CacheHelper.getData(key: 'access_token');
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..GetProduct(token: access_token, id: product_id),
+      create: (BuildContext context) => AppCubit()..GetProduct(token: access_token, id: product_id)..GetAllProducts(token: access_token, page: "1"),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state){
           if(state is GetProductSuccessState){
             productModel = state.productModel;
+            get_details = true;
+          }
+          if(state is GetAllProductsSuccessState){
+            allProductsModel = state.allProductsModel;
+            get_products = true;
+          }
+          if(state is LikeProductSuccessState){
+            Fluttertoast.showToast(
+                msg: "Product added to liked list",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          if(state is LikeProductErrorState){
+            Fluttertoast.showToast(
+                msg: state.error.toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
         },
         builder: (context, state){
           return Scaffold(
             backgroundColor: white,
             body: ConditionalBuilder(
-              condition: state is GetProductSuccessState,
+              condition: get_details && get_products,
               fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
               builder: (context) => Stack(
                 children: [
                   Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 300.h,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/dress.png"),
-                              fit: BoxFit.cover
-                          ),
+                        width: double.infinity,
+                        child: Carousel(
+                          dotSize: 0,
+                          dotSpacing: 0,
+                          radius: Radius.circular(20.r),
+                          borderRadius: true,
+                          showIndicator: false,
+                          dotPosition: DotPosition.bottomCenter,
+                          images: [
+                            for(int i =0 ; i < productModel!.data!.images!.length; i++)
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(productModel!.data!.images![i].toString()),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -69,7 +118,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               icon: const Icon(Icons.arrow_back_ios),
                             ),
                             IconButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                AppCubit.get(context).LikeProduct(token: access_token, id: product_id);
+                              },
                               icon: const ImageIcon(AssetImage("assets/images/heart_icon.png"),),
                             ),
                           ],
@@ -94,14 +145,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Blue Dress",
+                                    productModel!.data!.name.toString(),
                                     style: TextStyle(
                                       fontSize: 25.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
-                                    "H&M",
+                                    productModel!.data!.brandId!.name.toString(),
                                     style: TextStyle(
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.w600,
@@ -117,26 +168,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "500 L.E",
+                                        "${productModel!.data!.price} L.E",
                                         style: TextStyle(
                                             fontSize: 20.sp
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
-                                      Text(
-                                        "600 L.E",
-                                        style: TextStyle(
-                                          fontSize: 15.sp,
-                                          color: const Color.fromRGBO(137, 137, 137, 1),
-                                          decoration: TextDecoration.lineThrough,
-                                        ),
-                                      ),
+                                      // SizedBox(width: 10.w,),
+                                      // Text(
+                                      //   "600 L.E",
+                                      //   style: TextStyle(
+                                      //     fontSize: 15.sp,
+                                      //     color: const Color.fromRGBO(137, 137, 137, 1),
+                                      //     decoration: TextDecoration.lineThrough,
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Text(
-                                        "4.5",
+                                        productModel!.data!.averageRate.toString(),
                                         style: TextStyle(
                                             color: depOrange,
                                             fontWeight: FontWeight.w600,
@@ -158,7 +209,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               SizedBox(height: 10.h,),
                               Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                                productModel!.data!.description.toString(),
                                 style: TextStyle(
                                   fontSize: 15.sp,
                                   color: const Color.fromRGBO(95, 95, 95, 1),
@@ -184,7 +235,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                                       child: Text(
-                                        "S",
+                                        productModel!.data!.sizes![index].toString(),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 20.sp,
@@ -193,7 +244,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ),
                                   separatorBuilder: (context, index) => SizedBox(width: 15.w,),
-                                  itemCount: 4,
+                                  itemCount: productModel!.data!.sizes!.length,
                                   scrollDirection: Axis.horizontal,
                                   physics: const NeverScrollableScrollPhysics(),
                                 ),
@@ -213,12 +264,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   itemBuilder: (context, index) => Container(
                                     width: 40.w,
                                     decoration: BoxDecoration(
-                                      color: Colors.blue,
+                                      color: Colors.red,
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
                                   separatorBuilder: (context, index) => SizedBox(width: 15.w,),
-                                  itemCount: 4,
+                                  itemCount: productModel!.data!.colors!.length,
                                   scrollDirection: Axis.horizontal,
                                   physics: const NeverScrollableScrollPhysics(),
                                 ),
@@ -231,16 +282,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     fontWeight: FontWeight.w600
                                 ),
                               ),
-                              SizedBox(height: 10.h,),
-                              // SizedBox(
-                              //   height: 180.h,
-                              //   child: ListView.separated(
-                              //     itemBuilder: (context, index) => CardBuilder(context: context),
-                              //     separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                              //     itemCount: 10,
-                              //     scrollDirection: Axis.horizontal,
-                              //   ),
-                              // ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                child: SizedBox(
+                                  height: 175.h,
+                                  child: ListView.separated(
+                                    itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].cover.toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: "4.5", id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
+                                    separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                                    itemCount: allProductsModel!.data!.length,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),

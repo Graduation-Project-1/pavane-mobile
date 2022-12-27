@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/constants/product_card.dart';
-
 import '../../constants/colors.dart';
 
-class ProductByCategoryScreen extends StatelessWidget {
+class ProductByCategoryScreen extends StatefulWidget {
 
+  @override
+  State<ProductByCategoryScreen> createState() => _ProductByCategoryScreenState();
+}
+
+class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
