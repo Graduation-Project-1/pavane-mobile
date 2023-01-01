@@ -25,79 +25,97 @@ class LikedProductsModel {
 class LikedItems {
   LikedItems({
       this.id, 
+      this.categoryList, 
       this.name, 
+      this.brandId, 
       this.price, 
       this.description, 
-      this.numberOfReviews, 
-      this.numberOfLikes, 
-      this.averageRate, 
-      this.gender, 
-      this.isAdult, 
-      this.discountRate, 
       this.images, 
+      this.numberOfReviews, 
+      this.averageRate, 
+      this.numberOfLikes, 
+      this.gender, 
       this.sizes, 
       this.colors, 
-      this.brandId, 
-      this.categoryList, 
-      this.v, 
-      this.cover,});
+      this.isAdult,});
 
   LikedItems.fromJson(dynamic json) {
     id = json['_id'];
+    categoryList = json['categoryList'] != null ? json['categoryList'].cast<String>() : [];
     name = json['name'];
+    brandId = json['brandId'] != null ? BrandId.fromJson(json['brandId']) : null;
     price = json['price'];
     description = json['description'];
-    numberOfReviews = json['numberOfReviews'];
-    numberOfLikes = json['numberOfLikes'];
-    averageRate = json['averageRate'];
-    gender = json['gender'];
-    isAdult = json['isAdult'];
-    discountRate = json['discountRate'];
     images = json['images'] != null ? json['images'].cast<String>() : [];
+    numberOfReviews = json['numberOfReviews'];
+    averageRate = json['averageRate'];
+    numberOfLikes = json['numberOfLikes'];
+    gender = json['gender'];
     sizes = json['sizes'] != null ? json['sizes'].cast<String>() : [];
-    colors = json['colors'] != null ? json['colors'].cast<String>() : [];
-    brandId = json['brandId'];
-    categoryList = json['categoryList'] != null ? json['categoryList'].cast<String>() : [];
-    v = json['__v'];
-    cover = json['cover'];
+    if (json['colors'] != null) {
+      colors = [];
+      json['colors'].forEach((v) {
+        colors?.add(v);
+      });
+    }
+    isAdult = json['isAdult'];
+  }
+  String? id;
+  List<String>? categoryList;
+  String? name;
+  BrandId? brandId;
+  int? price;
+  String? description;
+  List<String>? images;
+  int? numberOfReviews;
+  var averageRate;
+  int? numberOfLikes;
+  String? gender;
+  List<String>? sizes;
+  List<dynamic>? colors;
+  bool? isAdult;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['_id'] = id;
+    map['categoryList'] = categoryList;
+    map['name'] = name;
+    if (brandId != null) {
+      map['brandId'] = brandId?.toJson();
+    }
+    map['price'] = price;
+    map['description'] = description;
+    map['images'] = images;
+    map['numberOfReviews'] = numberOfReviews;
+    map['averageRate'] = averageRate;
+    map['numberOfLikes'] = numberOfLikes;
+    map['gender'] = gender;
+    map['sizes'] = sizes;
+    if (colors != null) {
+      map['colors'] = colors?.map((v) => v.toJson()).toList();
+    }
+    map['isAdult'] = isAdult;
+    return map;
+  }
+
+}
+
+class BrandId {
+  BrandId({
+      this.id, 
+      this.name,});
+
+  BrandId.fromJson(dynamic json) {
+    id = json['_id'];
+    name = json['name'];
   }
   String? id;
   String? name;
-  int? price;
-  String? description;
-  int? numberOfReviews;
-  int? numberOfLikes;
-  int? averageRate;
-  String? gender;
-  bool? isAdult;
-  int? discountRate;
-  List<String>? images;
-  List<String>? sizes;
-  List<String>? colors;
-  String? brandId;
-  List<String>? categoryList;
-  int? v;
-  String? cover;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = id;
     map['name'] = name;
-    map['price'] = price;
-    map['description'] = description;
-    map['numberOfReviews'] = numberOfReviews;
-    map['numberOfLikes'] = numberOfLikes;
-    map['averageRate'] = averageRate;
-    map['gender'] = gender;
-    map['isAdult'] = isAdult;
-    map['discountRate'] = discountRate;
-    map['images'] = images;
-    map['sizes'] = sizes;
-    map['colors'] = colors;
-    map['brandId'] = brandId;
-    map['categoryList'] = categoryList;
-    map['__v'] = v;
-    map['cover'] = cover;
     return map;
   }
 

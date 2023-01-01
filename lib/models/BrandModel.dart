@@ -34,18 +34,23 @@ class Data {
       this.id, 
       this.name, 
       this.email, 
+      this.role, 
       this.numberOfLikes, 
+      this.numberOfReviews, 
+      this.averageRate, 
       this.phone, 
       this.categoryList, 
-      this.role, 
-      this.v, 
-      this.image,});
+      this.image, 
+      this.coverImage,});
 
   Data.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
     email = json['email'];
+    role = json['role'];
     numberOfLikes = json['numberOfLikes'];
+    numberOfReviews = json['numberOfReviews'];
+    averageRate = json['averageRate'];
     phone = json['phone'] != null ? json['phone'].cast<String>() : [];
     if (json['categoryList'] != null) {
       categoryList = [];
@@ -53,33 +58,36 @@ class Data {
         categoryList?.add(CategoryList.fromJson(v));
       });
     }
-    role = json['role'];
-    v = json['__v'];
     image = json['image'];
+    coverImage = json['coverImage'];
   }
   String? id;
   String? name;
   String? email;
+  String? role;
   int? numberOfLikes;
+  int? numberOfReviews;
+  int? averageRate;
   List<String>? phone;
   List<CategoryList>? categoryList;
-  String? role;
-  int? v;
   String? image;
+  String? coverImage;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = id;
     map['name'] = name;
     map['email'] = email;
+    map['role'] = role;
     map['numberOfLikes'] = numberOfLikes;
+    map['numberOfReviews'] = numberOfReviews;
+    map['averageRate'] = averageRate;
     map['phone'] = phone;
     if (categoryList != null) {
       map['categoryList'] = categoryList?.map((v) => v.toJson()).toList();
     }
-    map['role'] = role;
-    map['__v'] = v;
     map['image'] = image;
+    map['coverImage'] = coverImage;
     return map;
   }
 
@@ -89,25 +97,21 @@ class CategoryList {
   CategoryList({
       this.id, 
       this.name, 
-      this.v, 
       this.image,});
 
   CategoryList.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
-    v = json['__v'];
     image = json['image'];
   }
   String? id;
   String? name;
-  int? v;
   String? image;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = id;
     map['name'] = name;
-    map['__v'] = v;
     map['image'] = image;
     return map;
   }

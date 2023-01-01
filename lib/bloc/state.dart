@@ -3,6 +3,7 @@ import '../models/AllCategoriesModel.dart';
 import '../models/AllCollectionsModel.dart';
 import '../models/AllProductsModel.dart';
 import '../models/BrandModel.dart';
+import '../models/CollectionModel.dart';
 import '../models/LikedBrandsModel.dart';
 import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
@@ -136,6 +137,19 @@ class  GetPopularBrandsErrorState extends AppStates {
   GetPopularBrandsErrorState(this.error);
 }
 
+
+class GetAllBrandsLoadingState extends AppStates {}
+
+class GetAllBrandsSuccessState extends AppStates {
+  final AllBrandsModel allBrandsModel;
+  GetAllBrandsSuccessState(this.allBrandsModel);
+}
+
+class  GetAllBrandsErrorState extends AppStates {
+  final String error;
+  GetAllBrandsErrorState(this.error);
+}
+
 class GetLikedBrandsLoadingState extends AppStates {}
 
 class GetLikedBrandsSuccessState extends AppStates {
@@ -191,4 +205,29 @@ class GetLikedCollectionsSuccessState extends AppStates {
 class  GetLikedCollectionsErrorState extends AppStates {
   final String error;
   GetLikedCollectionsErrorState(this.error);
+}
+
+class GetAllCollectionsLoadingState extends AppStates {}
+
+class GetAllCollectionsSuccessState extends AppStates {
+  final AllCollectionsModel allCollectionsModel;
+  GetAllCollectionsSuccessState(this.allCollectionsModel);
+}
+
+class  GetAllCollectionsErrorState extends AppStates {
+  final String error;
+  GetAllCollectionsErrorState(this.error);
+}
+
+
+class GetCollectionLoadingState extends AppStates {}
+
+class GetCollectionSuccessState extends AppStates {
+  final CollectionModel collectionModel;
+  GetCollectionSuccessState(this.collectionModel);
+}
+
+class  GetCollectionErrorState extends AppStates {
+  final String error;
+  GetCollectionErrorState(this.error);
 }

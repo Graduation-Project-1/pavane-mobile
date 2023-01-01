@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, non_constant_identifier_names, no_logic_in_create_state
+
 import 'package:carousel_nullsafety/carousel_nullsafety.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pavane/constants/colors.dart';
+import 'package:readmore/readmore.dart';
 import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
@@ -26,7 +29,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   String product_id;
   _ProductDetailsScreenState(this.product_id);
-
   ProductModel? productModel;
   bool get_details = false;
   AllProductsModel? allProductsModel;
@@ -98,7 +100,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.r),
                                   image: DecorationImage(
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                     image: NetworkImage(productModel!.data!.images![i].toString()),
                                   ),
                                 ),
@@ -143,46 +145,37 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    productModel!.data!.name.toString(),
-                                    style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.w600,
+                                  SizedBox(
+                                    width: 250,
+                                    child: Text(
+                                      productModel!.data!.name.toString(),
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
                                   Text(
                                     productModel!.data!.brandId!.name.toString(),
                                     style: TextStyle(
-                                      fontSize: 20.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10.h,),
+                              SizedBox(height: 15.h,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "${productModel!.data!.price} L.E",
-                                        style: TextStyle(
-                                            fontSize: 20.sp
-                                        ),
-                                      ),
-                                      // SizedBox(width: 10.w,),
-                                      // Text(
-                                      //   "600 L.E",
-                                      //   style: TextStyle(
-                                      //     fontSize: 15.sp,
-                                      //     color: const Color.fromRGBO(137, 137, 137, 1),
-                                      //     decoration: TextDecoration.lineThrough,
-                                      //   ),
-                                      // ),
-                                    ],
+                                  Text(
+                                    "${productModel!.data!.price} L.E",
+                                    style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                   Row(
                                     children: [
@@ -208,23 +201,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                               SizedBox(height: 10.h,),
-                              Text(
+
+                              ReadMoreText(
                                 productModel!.data!.description.toString(),
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: const Color.fromRGBO(95, 95, 95, 1),
-                                ),
+                                trimLines: 5,
+                                trimMode: TrimMode.Line,
+                                trimCollapsedText: 'Show more',
+                                trimExpandedText: 'Show less',
+                                moreStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600, color: depOrange),
+                                lessStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600, color: depOrange),
                               ),
                               SizedBox(height: 15.h,),
-                              Text(
+                              productModel!.data!.sizes!.isEmpty? Container() : Text(
                                 "Available Sizes",
                                 style: TextStyle(
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w600
                                 ),
                               ),
-                              SizedBox(height: 10.h,),
-                              SizedBox(
+                              productModel!.data!.sizes!.isEmpty? Container() :  SizedBox(height: 10.h,),
+                              productModel!.data!.sizes!.isEmpty? Container() :   SizedBox(
                                 height: 40,
                                 child: ListView.separated(
                                   itemBuilder: (context, index) => Container(
@@ -249,31 +245,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   physics: const NeverScrollableScrollPhysics(),
                                 ),
                               ),
-                              SizedBox(height: 15.h,),
-                              Text(
-                                "Available Colors",
-                                style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600
-                                ),
-                              ),
-                              SizedBox(height: 10.h,),
-                              SizedBox(
-                                height: 40,
-                                child: ListView.separated(
-                                  itemBuilder: (context, index) => Container(
-                                    width: 40.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                  ),
-                                  separatorBuilder: (context, index) => SizedBox(width: 15.w,),
-                                  itemCount: productModel!.data!.colors!.length,
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                ),
-                              ),
+                              // SizedBox(height: 15.h,),
+                              // productModel!.data!.colors!.isEmpty ? Container() : Text(
+                              //   "Available Colors",
+                              //   style: TextStyle(
+                              //       fontSize: 20.sp,
+                              //       fontWeight: FontWeight.w600
+                              //   ),
+                              // ),
+                              // productModel!.data!.colors!.isEmpty ? Container() : SizedBox(height: 10.h,),
+                              // productModel!.data!.colors!.isEmpty ? Container() : SizedBox(
+                              //   height: 40,
+                              //   child: ListView.separated(
+                              //     itemBuilder: (context, index) => Container(
+                              //       width: 40.w,
+                              //       decoration: BoxDecoration(
+                              //         color: Colors.red,
+                              //         borderRadius: BorderRadius.circular(10.r),
+                              //       ),
+                              //     ),
+                              //     separatorBuilder: (context, index) => SizedBox(width: 15.w,),
+                              //     itemCount: productModel!.data!.colors!.length,
+                              //     scrollDirection: Axis.horizontal,
+                              //     physics: const NeverScrollableScrollPhysics(),
+                              //   ),
+                              // ),
                               SizedBox(height: 15.h,),
                               Text(
                                 "Similar Products",
@@ -285,9 +281,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10.h),
                                 child: SizedBox(
-                                  height: 175.h,
+                                  height: 200.h,
                                   child: ListView.separated(
-                                    itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].cover.toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: "4.5", id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
+                                    itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].images![0].toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: "4.5", id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
                                     separatorBuilder: (context, index) => SizedBox(width: 10.w,),
                                     itemCount: allProductsModel!.data!.length,
                                     scrollDirection: Axis.horizontal,

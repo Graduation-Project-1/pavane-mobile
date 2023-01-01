@@ -15,7 +15,9 @@ import '../../models/AllProductsModel.dart';
 import '../../models/UserModel.dart';
 import '../all categories/all_categories_screen.dart';
 import '../brand profile/brand_profile_screen.dart';
+import '../collection/collection_screen.dart';
 import '../notification/notification_screen.dart';
+import '../products by category/product_by_category_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,13 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
   bool get_popular_brands = false;
   AllCollectionsModel? popularCollectionsModel;
   bool get_popular_collections = false;
+  AllBrandsModel? allBrandsModel;
+  bool get_all_brands = false;
+  AllCollectionsModel? allCollectionsModel;
+  bool get_all_collections = false;
 
   var access_token = CacheHelper.getData(key: 'access_token');
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..GetUserData(token: access_token)..GetAllCategories(token: access_token, page: "1")..GetAllProducts(token: access_token, page: "1")..GetPopularBrands(token: access_token)..GetPopularCollections(token: access_token),
+      create: (BuildContext context) => AppCubit()..GetUserData(token: access_token)..GetAllCategories(token: access_token, page: "1")..GetAllProducts(token: access_token, page: "1")..GetPopularBrands(token: access_token)..GetPopularCollections(token: access_token)..GetAllBrands(token: access_token, page: 1)..GetAllCollections(token: access_token, page: 1),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state){
           if(state is GetUserDataSuccessState){
@@ -71,6 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
           if(state is GetPopularCollectionsSuccessState){
             popularCollectionsModel = state.allCollectionsModel;
             get_popular_collections = true;
+          }
+          if(state is GetAllBrandsSuccessState){
+            allBrandsModel = state.allBrandsModel;
+            get_all_brands = true;
+          }
+          if(state is GetAllCollectionsSuccessState){
+            allCollectionsModel = state.allCollectionsModel;
+            get_all_collections = true;
           }
         },
         builder: (context, state){
@@ -119,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             body: ConditionalBuilder(
-              condition: get_user && get_cat && get_products && get_popular_brands && get_popular_collections,
+              condition: get_user && get_cat && get_products && get_popular_brands && get_popular_collections && get_all_brands && get_all_collections,
               fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
               builder: (context) => Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
@@ -215,21 +229,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: 80.h,
                         child: ListView.separated(
-                          itemBuilder: (context, index) => Column(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(allCategoriesModel!.data![index].image.toString()),
-                                radius: 30.r,
-                              ),
-                              Text(
-                                allCategoriesModel!.data![index].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 15.sp
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductByCategoryScreen(allCategoriesModel!.data![index].id, allCategoriesModel!.data![index].name, 0))));
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${allCategoriesModel!.data![index].image}'),
+                                  radius: 30.r,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  allCategoriesModel!.data![index].name.toString(),
+                                  style: TextStyle(
+                                      fontSize: 15.sp
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                          separatorBuilder: (context, index) => SizedBox(width: 20.w,),
                           itemCount: allCategoriesModel!.data!.length,
                           scrollDirection: Axis.horizontal,
                         ),
@@ -246,9 +265,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 175.h,
+                        height: 200.h,
                         child: ListView.separated(
-                          itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].cover.toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: allProductsModel!.data![index].averageRate.toString(), id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
+                          itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].images![0].toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: allProductsModel!.data![index].averageRate.toString(), id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
                           separatorBuilder: (context, index) => SizedBox(width: 10.w,),
                           itemCount: allProductsModel!.data!.length,
                           scrollDirection: Axis.horizontal,
@@ -257,43 +276,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       SizedBox(height: 15.h,),
 
-                      Text(
-                        "Popular Brands",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20.sp
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
-                        child: SizedBox(
-                          height: 85.h,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>  InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(popularBrandsModel!.data![index].id.toString()))));
-                              },
-                              child: Material(
-                                borderRadius: BorderRadius.circular(10.r),
-                                child: Container(
-                                  width: 170.w,
-                                  height: 80.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    image: DecorationImage(
-                                        image: NetworkImage(popularBrandsModel!.data![index].image.toString()),
-                                        fit: BoxFit.cover
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                            itemCount: popularBrandsModel!.data!.length,
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        ),
-                      ),
+                      // popularBrandsModel!.data!.length > 0 ? Text(
+                      //   "Popular Brands",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.w600,
+                      //       fontSize: 20.sp
+                      //   ),
+                      // ) : Container(),
+                      // popularBrandsModel!.data!.length > 0 ? Padding(
+                      //   padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
+                      //   child: SizedBox(
+                      //     height: 85.h,
+                      //     child: ListView.separated(
+                      //       itemBuilder: (context, index) =>  InkWell(
+                      //         onTap: (){
+                      //           Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(popularBrandsModel!.data![index].id.toString()))));
+                      //         },
+                      //         child: Material(
+                      //           borderRadius: BorderRadius.circular(10.r),
+                      //           child: Container(
+                      //             width: 170.w,
+                      //             height: 80.h,
+                      //             decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(10.r),
+                      //               image: DecorationImage(
+                      //                   image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${popularBrandsModel!.data![index].image}'),
+                      //                   fit: BoxFit.cover
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                      //       itemCount: popularBrandsModel!.data!.length,
+                      //       scrollDirection: Axis.horizontal,
+                      //     ),
+                      //   ),
+                      // ) : Container(),
 
                       // Text(
                       //   "Popular Products",
@@ -315,8 +334,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ),
                       // ),
 
+                      SizedBox(height: 15.h,),
+
                       Text(
-                        "Popular Collections",
+                        "Brands",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20.sp
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: SizedBox(
+                          height: 85.h,
+                          child: ListView.separated(
+                            itemBuilder: (context, index) =>  InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(allBrandsModel!.data![index].id.toString()))));
+                              },
+                              child: Material(
+                                borderRadius: BorderRadius.circular(10.r),
+                                child: Container(
+                                  width: 170.w,
+                                  height: 80.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    image: DecorationImage(
+                                        image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${allBrandsModel!.data![index].image}'),
+                                        fit: BoxFit.cover
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                            itemCount: allBrandsModel!.data!.length,
+                            scrollDirection: Axis.horizontal,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 15.h,),
+
+                      Text(
+                        "Collections",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20.sp
@@ -327,48 +388,53 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SizedBox(
                           height: 115.h,
                           child: ListView.separated(
-                            itemBuilder: (context, index) => Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 110.h,
-                                  width: 170.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    image: DecorationImage(
-                                        image: NetworkImage(popularCollectionsModel!.data![index].image.toString()),
-                                        fit: BoxFit.cover
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => CollectionScreen(allCollectionsModel!.data![index].id))));
+                              },
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    height: 110.h,
+                                    width: 170.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      image: DecorationImage(
+                                          image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${allCollectionsModel!.data![index].image}'),
+                                          fit: BoxFit.cover
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 110.h,
-                                  width: 170.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    gradient: const LinearGradient(
-                                      colors: [Color.fromRGBO(255, 255, 255, .42), Color.fromRGBO(128, 128, 128, .42)],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
+                                  Container(
+                                    height: 110.h,
+                                    width: 170.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      gradient: const LinearGradient(
+                                        colors: [Color.fromRGBO(255, 255, 255, .42), Color.fromRGBO(128, 128, 128, .42)],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 150.w,
-                                  child: Text(
-                                    popularCollectionsModel!.data![index].name.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp,
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      allCollectionsModel!.data![index].name!.length > 20 ? allCollectionsModel!.data![index].name!.toString().substring(0, 20) : allCollectionsModel!.data![index].name.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.sp,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                            itemCount: popularCollectionsModel!.data!.length,
+                            itemCount: allCollectionsModel!.data!.length,
                             scrollDirection: Axis.horizontal,
                           ),
                         ),

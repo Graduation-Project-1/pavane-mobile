@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../Helper/Cache_helper.dart';
 import '../../constants/colors.dart';
 import '../../constants/row_builder.dart';
+import '../authentication/login_or_register_screen.dart';
 
 class SettingScreen extends StatelessWidget {
 
@@ -42,6 +44,17 @@ class SettingScreen extends StatelessWidget {
             RowBuilder(icon: Icons.language, title: "Language", function: (){}),
             SizedBox(height: 10.h,),
             RowBuilder(icon: Icons.payment, title: "Payment", function: (){}),
+            SizedBox(height: 10.h,),
+            RowBuilder(icon: Icons.logout_outlined, title: "Payment", function: (){
+              CacheHelper.removeData(
+                key: 'access_token',
+              ).then((value)
+              {
+                Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: ((context) => LoginOrRegisterScreen())),
+                );
+              });
+            }),
             SizedBox(height: 10.h,),
           ],
         ),

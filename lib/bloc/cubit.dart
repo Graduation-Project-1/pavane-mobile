@@ -8,6 +8,7 @@ import '../models/AllCategoriesModel.dart';
 import '../models/AllCollectionsModel.dart';
 import '../models/AllProductsModel.dart';
 import '../models/BrandModel.dart';
+import '../models/CollectionModel.dart';
 import '../models/LikedBrandsModel.dart';
 import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
@@ -176,6 +177,86 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  AllProductsModel? ProductsByCatModel;
+
+
+  void GetProductsByCat({
+    required String token,
+    required String page,
+    required var cat_id,
+  })
+  {
+    emit(GetAllProductsLoadingState());
+    DioHelper.getData(
+      url: 'getAllItemsWithFilter?categoryList=$cat_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      ProductsByCatModel = AllProductsModel.fromJson(value.data);
+      emit(GetAllProductsSuccessState(ProductsByCatModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllProductsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  AllProductsModel? ProductsByBrandModel;
+
+  void GetProductsByBrand({
+    required String token,
+    required String page,
+    required var brand_id,
+  })
+  {
+    emit(GetAllProductsLoadingState());
+    DioHelper.getData(
+      url: 'getAllItemsWithFilter?brandId=$brand_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      ProductsByBrandModel = AllProductsModel.fromJson(value.data);
+      emit(GetAllProductsSuccessState(ProductsByBrandModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllProductsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  AllProductsModel? ProductsByBrandAndCatModel;
+
+  void GetProductsByBrandAndCat({
+    required String token,
+    required String page,
+    required var brand_id,
+    required var cat_id,
+  })
+  {
+    emit(GetAllProductsLoadingState());
+    DioHelper.getData(
+      url: 'getAllItemsWithFilter?brandId=$brand_id&categoryList=$cat_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      ProductsByBrandAndCatModel = AllProductsModel.fromJson(value.data);
+      emit(GetAllProductsSuccessState(ProductsByBrandAndCatModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllProductsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
 
   ProductModel? productModel;
 
@@ -301,6 +382,31 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  AllBrandsModel? allBrandsModel;
+
+  void GetAllBrands({
+    required String token,
+    required var page,
+  })
+  {
+    emit(GetAllBrandsLoadingState());
+    DioHelper.getData(
+      url: 'getAllBrands?page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      allBrandsModel = AllBrandsModel.fromJson(value.data);
+      emit(GetAllBrandsSuccessState(allBrandsModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllBrandsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
 
   LikedBrandsModel? likedBrandsModel;
 
@@ -377,6 +483,9 @@ class AppCubit extends Cubit<AppStates> {
   }
 
 
+
+
+
   AllCollectionsModel? popularCollectionsModel;
 
   void GetPopularCollections({
@@ -391,6 +500,58 @@ class AppCubit extends Cubit<AppStates> {
     {
       popularCollectionsModel = AllCollectionsModel.fromJson(value.data);
       emit(GetPopularCollectionsSuccessState(popularCollectionsModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetPopularCollectionsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  AllCollectionsModel? allCollectionsModel;
+
+  void GetAllCollections({
+    required String token,
+    required var page,
+  })
+  {
+    emit(GetAllCollectionsLoadingState());
+    DioHelper.getData(
+      url: 'getAllCollections?page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      allCollectionsModel = AllCollectionsModel.fromJson(value.data);
+      emit(GetAllCollectionsSuccessState(allCollectionsModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllCollectionsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+
+  AllCollectionsModel? collectionsByBrandModel;
+
+  void GetCollectionsByBrand({
+    required String token,
+    required var brand_id,
+    required var page,
+  })
+  {
+    emit(GetPopularCollectionsLoadingState());
+    DioHelper.getData(
+      url: 'getAllCollections?brandId=$brand_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      collectionsByBrandModel = AllCollectionsModel.fromJson(value.data);
+      emit(GetPopularCollectionsSuccessState(collectionsByBrandModel!));
     }
     ).catchError((error)
     {
@@ -420,6 +581,32 @@ class AppCubit extends Cubit<AppStates> {
     ).catchError((error)
     {
       emit(GetLikedCollectionsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+
+  CollectionModel? collectionModel;
+
+  void GetCollection({
+    required String token,
+    required var id,
+  })
+  {
+    emit(GetCollectionLoadingState());
+    DioHelper.getData(
+      url: 'getCollectionById/$id',
+      token: token,
+    ).then((value)
+    {
+      collectionModel = CollectionModel.fromJson(value.data);
+      emit(GetCollectionSuccessState(collectionModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetCollectionErrorState(error.response.data['message'].toString()));
       print("******************************");
       print(error.response.data.toString());
       print("******************************");

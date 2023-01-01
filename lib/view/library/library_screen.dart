@@ -14,6 +14,7 @@ import '../../models/LikedBrandsModel.dart';
 import '../../models/LikedCollectionsModel.dart';
 import '../../models/LikedProductsModel.dart';
 import '../brand profile/brand_profile_screen.dart';
+import '../collection/collection_screen.dart';
 import '../search/search_screen.dart';
 
 var access_token = CacheHelper.getData(key: 'access_token');
@@ -101,9 +102,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "Wishlist",
+                        "Fitting Room",
                         style: TextStyle(
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
                           color: x == 1 ? Colors.white : Colors.black,
                         ),
@@ -170,7 +171,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           ),
 
           if(x == 1)
-            Wishlist(),
+            Expanded(child: FittingRoom()),
           if(x == 2)
             Expanded(child: Likes()),
           if(x == 3)
@@ -181,29 +182,42 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 }
 
-class Wishlist extends StatelessWidget {
+class FittingRoom extends StatefulWidget {
 
   @override
+  State<FittingRoom> createState() => _FittingRoomState();
+}
+
+class _FittingRoomState extends State<FittingRoom> {
+  @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        itemCount: 11,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .85),
-        itemBuilder: (context, index) => Padding(
-          padding: EdgeInsets.all(15.0.r),
-          // child: CardBuilder(context: context),
+    return Center(
+      child: Text(
+        'Coming Soon',
+        style: TextStyle(
+            color: depOrange,
+            fontSize: 35.sp,
+            fontFamily: "Roller"
         ),
       ),
     );
   }
 }
 
-class Likes extends StatelessWidget {
+class Likes extends StatefulWidget {
+
+  @override
+  State<Likes> createState() => _LikesState();
+}
+
+class _LikesState extends State<Likes> {
 
   LikedBrandsModel? likedBrandsModel;
   bool get_liked_brands = false;
+
   LikedCollectionsModel? likedCollectionsModel;
   bool get_liked_collections = false;
+
   LikedProductsModel? likedProductsModel;
   bool get_liked_products = false;
 
@@ -248,48 +262,53 @@ class Likes extends StatelessWidget {
                       child: SizedBox(
                         height: 115.h,
                         child: ConditionalBuilder(
-                          condition: likedCollectionsModel!.likedCollections != null,
-                          fallback: (context) => const Center(child: Text("No Liked Collections Added Yet")),
+                          condition: likedCollectionsModel!.likedCollections!.isNotEmpty,
+                          fallback: (context) => Center(child: Text("No Liked Collections Added Yet", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),)),
                           builder: (context) => ListView.separated(
-                            itemBuilder: (context, index) => Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 110.h,
-                                  width: 170.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    image: DecorationImage(
-                                        image: NetworkImage(likedCollectionsModel!.likedCollections![index].image.toString()),
-                                        fit: BoxFit.cover
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => CollectionScreen(likedCollectionsModel!.likedCollections![index].id))));
+                              },
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    height: 110.h,
+                                    width: 170.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      image: DecorationImage(
+                                          image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${likedCollectionsModel!.likedCollections![index].image}'),
+                                          fit: BoxFit.contain
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 110.h,
-                                  width: 170.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    gradient: const LinearGradient(
-                                      colors: [Color.fromRGBO(255, 255, 255, .42), Color.fromRGBO(128, 128, 128, .42)],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
+                                  Container(
+                                    height: 110.h,
+                                    width: 170.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      gradient: const LinearGradient(
+                                        colors: [Color.fromRGBO(255, 255, 255, .42), Color.fromRGBO(128, 128, 128, .42)],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 150.w,
-                                  child: Text(
-                                    likedCollectionsModel!.likedCollections![index].name.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp,
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      likedCollectionsModel!.likedCollections![index].name!.length > 20 ? likedCollectionsModel!.likedCollections![index].name!.toString().substring(0, 20) : likedCollectionsModel!.likedCollections![index].name.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.sp,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             separatorBuilder: (context, index) => SizedBox(width: 10.w,),
                             itemCount: likedCollectionsModel!.likedCollections!.length,
@@ -309,12 +328,12 @@ class Likes extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.h),
                       child: SizedBox(
-                        height: 175.h,
+                        height: 200.h,
                         child: ConditionalBuilder(
-                          condition: likedProductsModel!.likedItems != null,
-                          fallback: (context) => const Center(child: Text("No Liked Product Added Yet")),
+                          condition: likedProductsModel!.likedItems!.isNotEmpty,
+                          fallback: (context) => Center(child: Text("No Liked Products Added Yet", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),)),
                           builder: (context) => ListView.separated(
-                            itemBuilder: (context, index) => CardBuilder(context: context, image: likedProductsModel!.likedItems![index].cover.toString(), name: likedProductsModel!.likedItems![index].name.toString(), price: likedProductsModel!.likedItems![index].price.toString(), rate: likedProductsModel!.likedItems![index].averageRate.toString(), id: likedProductsModel!.likedItems![index].id.toString(), brand: likedProductsModel!.likedItems![index].brandId!.toString()),
+                            itemBuilder: (context, index) => CardBuilder(context: context, image: likedProductsModel!.likedItems![index].images![0].toString(), name: likedProductsModel!.likedItems![index].name.toString(), price: likedProductsModel!.likedItems![index].price.toString(), rate: likedProductsModel!.likedItems![index].averageRate.toString(), id: likedProductsModel!.likedItems![index].id.toString(), brand: likedProductsModel!.likedItems![index].brandId!.toString()),
                             separatorBuilder: (context, index) => SizedBox(width: 10.w,),
                             itemCount: likedProductsModel!.likedItems!.length,
                             scrollDirection: Axis.horizontal,
@@ -335,8 +354,8 @@ class Likes extends StatelessWidget {
                       child: SizedBox(
                         height: 85.h,
                         child: ConditionalBuilder(
-                          condition: likedBrandsModel!.likedBrands != null,
-                          fallback: (context) => const Center(child: Text("No Liked Brands Added Yet")),
+                          condition: likedBrandsModel!.likedBrands!.isNotEmpty,
+                          fallback: (context) => Center(child: Text("No Liked Brands Added Yet", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),)),
                           builder: (context) => ListView.separated(
                             itemBuilder: (context, index) => InkWell(
                               onTap: (){
@@ -344,13 +363,14 @@ class Likes extends StatelessWidget {
                               },
                               child: Material(
                                 borderRadius: BorderRadius.circular(10.r),
+                                elevation: 3,
                                 child: Container(
                                   width: 170.w,
                                   height: 80.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
                                     image: DecorationImage(
-                                        image: NetworkImage(likedBrandsModel!.likedBrands![index].image.toString()),
+                                        image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${likedBrandsModel!.likedBrands![index].image}'),
                                         fit: BoxFit.cover
                                     ),
                                   ),
@@ -375,8 +395,13 @@ class Likes extends StatelessWidget {
   }
 }
 
-class ForYou extends StatelessWidget {
+class ForYou extends StatefulWidget {
 
+  @override
+  State<ForYou> createState() => _ForYouState();
+}
+
+class _ForYouState extends State<ForYou> {
   @override
   Widget build(BuildContext context) {
     return Center(

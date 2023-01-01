@@ -27,7 +27,7 @@ Widget CardBuilder({required BuildContext context, required String image, requir
                   borderRadius: BorderRadius.only(topRight: Radius.circular(10.r), topLeft: Radius.circular(10.r)),
                   image: DecorationImage(
                       image: NetworkImage(image),
-                      fit: BoxFit.cover
+                      fit: BoxFit.contain
                   ),
                 ),
               ),
@@ -40,26 +40,25 @@ Widget CardBuilder({required BuildContext context, required String image, requir
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            name,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              color: const Color.fromRGBO(101, 101, 101, 1),
-                            ),
-                          ),
-                          Text(
-                            brand,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: const Color.fromRGBO(101, 101, 101, 1),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: const Color.fromRGBO(101, 101, 101, 1),
+                        ),
                       ),
-                      SizedBox(height: 5.h,),
+                      SizedBox(height: 10.h,),
+                      Text(
+                        brand,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      SizedBox(height: 10.h,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
