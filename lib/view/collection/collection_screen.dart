@@ -109,7 +109,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                           price: collectionModel!.data!.itemsList![index].price.toString(),
                           rate: collectionModel!.data!.itemsList![index].averageRate.toString(),
                           id: collectionModel!.data!.itemsList![index].id.toString(),
-                          brand: 'test'
+                          brand: collectionModel!.data!.brandId!.name.toString()
                           ),
                       ),
                     ),
