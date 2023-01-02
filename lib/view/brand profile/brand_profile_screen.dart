@@ -11,8 +11,10 @@ import '../../constants/product_card.dart';
 import '../../models/AllCollectionsModel.dart';
 import '../../models/AllProductsModel.dart';
 import '../../models/BrandModel.dart';
+import '../all collections/all_collections_screen.dart';
+import '../all products/all_products_screen.dart';
 import '../collection/collection_screen.dart';
-import '../products by category/product_by_category_screen.dart';
+import '../products by brand and category screen/products_by_brand_and_category_screen.dart';
 
 class BrandProfileScreen extends StatefulWidget {
 
@@ -178,13 +180,31 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                     ),
 
                     collectionsByBrandModel!.data!.isEmpty ? Container() : Padding(
-                      padding: EdgeInsets.only(top: 15.h, left: 20.w),
-                      child: Text(
-                        "Collections",
-                        style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600
-                        ),
+                      padding: EdgeInsets.only(top: 15.h, left: 20.w, right: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Collections",
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: ((context) => AllCollectionsScreen(brandModel!.data!.id))));
+                            },
+                            child: Text(
+                              "SEE ALL",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.sp,
+                                  color: depOrange
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     if (collectionsByBrandModel!.data!.isEmpty) Container() else Padding(
@@ -228,7 +248,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                                   SizedBox(
                                     width: 150.w,
                                     child: Text(
-                                      collectionsByBrandModel!.data![index].name.toString().substring(0, 20),
+                                      collectionsByBrandModel!.data![index].name.toString().substring(0, 10),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: white,
@@ -251,7 +271,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                     brandModel!.data!.categoryList!.isEmpty ? Container() : Padding(
                       padding: EdgeInsets.only(top: 15.h, left: 20.w),
                       child: Text(
-                        "All Categories",
+                        "Categories",
                         style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w600
@@ -266,7 +286,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) => InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductByCategoryScreen(brandModel!.data!.categoryList![index].id, brandModel!.data!.categoryList![index].name, brandModel!.data!.id))));
+                              Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductsByBrandAndCategoryScreen(brandModel!.data!.categoryList![index].id, brandModel!.data!.categoryList![index].name, brandModel!.data!.id))));
                             },
                             child: Container(
                               height: 170.h,
@@ -302,13 +322,31 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(top: 15.h, left: 20.w),
-                      child: Text(
-                        "All Items",
-                        style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600
-                        ),
+                      padding: EdgeInsets.only(top: 15.h, left: 20.w, right: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Items",
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: ((context) => AllProductsScreen(brandModel!.data!.id))));
+                            },
+                            child: Text(
+                              "SEE ALL",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.sp,
+                                  color: depOrange
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
@@ -316,7 +354,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                       child: SizedBox(
                         height: 200.h,
                         child: ListView.separated(
-                          itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].images![0].toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: "4.5", id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
+                          itemBuilder: (context, index) => CardBuilder(context: context, image: allProductsModel!.data![index].images![0].toString(), name: allProductsModel!.data![index].name.toString(), price: allProductsModel!.data![index].price.toString(), rate: allProductsModel!.data![index].averageRate.toString(), id: allProductsModel!.data![index].id.toString(), brand: allProductsModel!.data![index].brandId!.name.toString()),
                           separatorBuilder: (context, index) => SizedBox(width: 10.w,),
                           itemCount: allProductsModel!.data!.length,
                           scrollDirection: Axis.horizontal,

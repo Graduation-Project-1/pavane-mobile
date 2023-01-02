@@ -180,7 +180,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        productModel!.data!.averageRate.toString(),
+                                        productModel!.data!.averageRate.toString().length > 3 ?productModel!.data!.averageRate.toString().substring(0, 3) : productModel!.data!.averageRate.toString() ,
                                         style: TextStyle(
                                             color: depOrange,
                                             fontWeight: FontWeight.w600,

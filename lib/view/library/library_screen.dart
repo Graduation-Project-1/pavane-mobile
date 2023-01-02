@@ -279,7 +279,7 @@ class _LikesState extends State<Likes> {
                                       borderRadius: BorderRadius.circular(10.r),
                                       image: DecorationImage(
                                           image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${likedCollectionsModel!.likedCollections![index].image}'),
-                                          fit: BoxFit.contain
+                                          fit: BoxFit.cover
                                       ),
                                     ),
                                   ),

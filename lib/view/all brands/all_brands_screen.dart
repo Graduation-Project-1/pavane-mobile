@@ -6,19 +6,19 @@ import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
-import '../category/category_screen.dart';
+import '../brand profile/brand_profile_screen.dart';
 
-class AllCategoriesScreen extends StatefulWidget {
-
+class AllBrandsScreen extends StatefulWidget {
 
   @override
-  State<AllCategoriesScreen> createState() => _AllCategoriesScreenState();
+  State<AllBrandsScreen> createState() => _AllBrandsScreenState();
 }
 
-class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
+class _AllBrandsScreenState extends State<AllBrandsScreen> {
 
+  bool get_all_brands = false;
   var access_token = CacheHelper.getData(key: 'access_token');
-  bool get = false;
+
   int page = 1;
   int totalPages = 0;
   final scrollcontroller = ScrollController();
@@ -28,7 +28,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
   @override
   void initState() {
     super.initState();
-    AppCubit.get(context).GetAllCategories(page: page.toString(), token: access_token);
+    AppCubit.get(context).GetAllBrands(page: page.toString(), token: access_token);
     scrollcontroller.addListener(_scrollListener);
   }
 
@@ -36,13 +36,13 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state){
-        if(state is GetAllCategoriesSuccessState){
-          for (final e in state.allCategoriesModel.data!){
+        if(state is GetAllBrandsSuccessState){
+          for (final e in state.allBrandsModel.data!){
             list.add(e.toJson());
           }
           isLoadingMore = false;
-          totalPages = (state.allCategoriesModel.totalResult!/10).ceil();
-          get = true;
+          totalPages = (state.allBrandsModel.totalResult!/10).ceil();
+          get_all_brands = true;
         }
       },
       builder: (context, state){
@@ -55,7 +55,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
               color: depOrange,
             ),
             title: Text(
-              'All Categories',
+              'All Brands',
               style: TextStyle(
                   color: depOrange,
                   fontSize: 35.sp,
@@ -66,52 +66,31 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
           body: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ConditionalBuilder(
-              condition: get,
+              condition: get_all_brands,
               fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
               builder: (context) => GridView.builder(
                 controller: scrollcontroller,
                 itemCount: isLoadingMore ? list.length + 1 : list.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.3),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1),
                 itemBuilder: (BuildContext context, int index) {
                   if(index < list.length){
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) => CategoryScreen(list[index]['_id'], list[index]['name']))));
+                          Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(list[index]['_id'].toString()))));
                         },
                         child: Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  image: DecorationImage(
-                                      image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${list[index]['image']}'),
-                                      fit: BoxFit.cover
-                                  ),
-                                ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              image: DecorationImage(
+                                  image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${list[index]['image']}'),
+                                  fit: BoxFit.contain
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    color: const Color.fromRGBO(0, 0, 0, .22)
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  list[index]['name'].toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.sp
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -135,9 +114,8 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
           isLoadingMore = true;
         });
         page = page + 1;
-        AppCubit.get(context).GetAllCategories(page: page.toString(), token: access_token);
+        AppCubit.get(context).GetAllBrands(page: page.toString(), token: access_token);
       }
     }
   }
-
 }

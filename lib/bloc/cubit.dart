@@ -613,4 +613,80 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void LikeCollection({
+    required String token,
+    required String id,
+  })
+  {
+    emit(LikeCollectionLoadingState());
+    DioHelper.getData(
+      url: 'likeCollection/$id',
+      token: token,
+    ).then((value)
+    {
+      emit(LikeCollectionSuccessState());
+    }
+    ).catchError((error)
+    {
+      emit(LikeCollectionErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+
+  AllCollectionsModel? allCollectionsByCatModel;
+
+  void GetAllCollectionsByCat({
+    required String token,
+    required var page,
+    required var cat_id,
+  })
+  {
+    emit(GetAllCollectionsLoadingState());
+    DioHelper.getData(
+      url: 'getAllCollections?categoryList=$cat_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      allCollectionsByCatModel = AllCollectionsModel.fromJson(value.data);
+      emit(GetAllCollectionsSuccessState(allCollectionsByCatModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllCollectionsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+
+  AllBrandsModel? allBrandsModelByCat;
+
+  void GetAllBrandsBYCat({
+    required String token,
+    required var page,
+    required var cat_id,
+  })
+  {
+    emit(GetAllBrandsLoadingState());
+    DioHelper.getData(
+      url: 'getAllBrands?categoryList=$cat_id&page=$page&size=10',
+      token: token,
+    ).then((value)
+    {
+      allBrandsModelByCat = AllBrandsModel.fromJson(value.data);
+      emit(GetAllBrandsSuccessState(allBrandsModelByCat!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAllBrandsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
 }

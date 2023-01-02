@@ -231,3 +231,12 @@ class  GetCollectionErrorState extends AppStates {
   final String error;
   GetCollectionErrorState(this.error);
 }
+
+class LikeCollectionLoadingState extends AppStates {}
+
+class LikeCollectionSuccessState extends AppStates {}
+
+class  LikeCollectionErrorState extends AppStates {
+  final String error;
+  LikeCollectionErrorState(this.error);
+}

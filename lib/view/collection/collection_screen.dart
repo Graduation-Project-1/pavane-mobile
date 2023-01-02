@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pavane/constants/product_card.dart';
 import 'package:pavane/models/CollectionModel.dart';
 
@@ -37,6 +38,28 @@ class _CollectionScreenState extends State<CollectionScreen> {
           if(state is GetCollectionSuccessState){
             collectionModel = state.collectionModel;
             get = true;
+          }
+          if(state is LikeCollectionSuccessState){
+            Fluttertoast.showToast(
+                msg: "Collection added to liked list",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          if(state is LikeCollectionErrorState){
+            Fluttertoast.showToast(
+                msg: state.error.toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
         },
         builder: (context, state){
@@ -83,7 +106,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
                               icon: const Icon(Icons.arrow_back_ios, color: depOrange,),
                             ),
                             IconButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                AppCubit.get(context).LikeCollection(token: access_token, id: collectionModel!.data!.id.toString());
+                              },
                               icon: Icon(Icons.favorite_border, color: depOrange, size: 30.sp,),
                             ),
                           ],

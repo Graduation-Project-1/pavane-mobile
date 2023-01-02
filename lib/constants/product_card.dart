@@ -72,7 +72,7 @@ Widget CardBuilder({required BuildContext context, required String image, requir
                           Row(
                             children: [
                               Text(
-                                rate,
+                                rate.length > 3 ? rate.substring(0, 3) : rate,
                                 style: TextStyle(
                                     color: depOrange,
                                     fontSize: 13.sp,

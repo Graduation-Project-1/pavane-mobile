@@ -7,23 +7,23 @@ import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
 
-class ProductByCategoryScreen extends StatefulWidget {
+class ProductsByBrandAndCategoryScreen extends StatefulWidget {
 
   var cat_id;
   var title;
   var brand_id;
-  ProductByCategoryScreen(this.cat_id, this.title, this.brand_id);
+  ProductsByBrandAndCategoryScreen(this.cat_id, this.title, this.brand_id);
 
   @override
-  State<ProductByCategoryScreen> createState() => _ProductByCategoryScreenState(cat_id, title, brand_id);
+  State<ProductsByBrandAndCategoryScreen> createState() => _ProductsByBrandAndCategoryScreenState(cat_id, title, brand_id);
 }
 
-class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
+class _ProductsByBrandAndCategoryScreenState extends State<ProductsByBrandAndCategoryScreen> {
 
   var cat_id;
   var title;
   var brand_id;
-  _ProductByCategoryScreenState(this.cat_id, this.title, this.brand_id);
+  _ProductsByBrandAndCategoryScreenState(this.cat_id, this.title, this.brand_id);
 
   int page = 1;
   int totalPages = 0;
@@ -36,7 +36,7 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
   @override
   void initState() {
     super.initState();
-    brand_id == 0 ? AppCubit.get(context).GetProductsByCat(page: page.toString(), token: access_token, cat_id: cat_id) : AppCubit.get(context).GetProductsByBrandAndCat(page: page.toString(), token: access_token, cat_id: cat_id, brand_id: brand_id);
+    AppCubit.get(context).GetProductsByBrandAndCat(page: page.toString(), token: access_token, cat_id: cat_id, brand_id: brand_id);
     scrollcontroller.addListener(_scrollListener);
   }
 
