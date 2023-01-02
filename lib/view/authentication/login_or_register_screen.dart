@@ -4,8 +4,13 @@ import 'package:pavane/view/authentication/login_screen.dart';
 import 'package:pavane/view/authentication/register_screen.dart';
 import '../../constants/colors.dart';
 
-class LoginOrRegisterScreen extends StatelessWidget {
+class LoginOrRegisterScreen extends StatefulWidget {
 
+  @override
+  State<LoginOrRegisterScreen> createState() => _LoginOrRegisterScreenState();
+}
+
+class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

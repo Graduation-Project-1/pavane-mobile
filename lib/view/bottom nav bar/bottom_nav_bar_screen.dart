@@ -5,7 +5,6 @@ import 'package:pavane/constants/colors.dart';
 import 'package:pavane/view/home/home_screen.dart';
 import 'package:pavane/view/library/library_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
 import '../fitting room/fitting_room_screen.dart';
 import '../profile/profile_screen.dart';
 

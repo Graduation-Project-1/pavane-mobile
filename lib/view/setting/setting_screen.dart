@@ -45,7 +45,7 @@ class SettingScreen extends StatelessWidget {
             SizedBox(height: 10.h,),
             RowBuilder(icon: Icons.payment, title: "Payment", function: (){}),
             SizedBox(height: 10.h,),
-            RowBuilder(icon: Icons.logout_outlined, title: "Payment", function: (){
+            RowBuilder(icon: Icons.logout_outlined, title: "Log Out", function: (){
               CacheHelper.removeData(
                 key: 'access_token',
               ).then((value)
