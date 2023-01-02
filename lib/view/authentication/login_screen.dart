@@ -10,10 +10,17 @@ import '../../constants/colors.dart';
 import '../bottom nav bar/bottom_nav_bar_screen.dart';
 import 'forget_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
 
   @override
