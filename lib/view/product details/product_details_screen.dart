@@ -123,7 +123,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               onPressed: (){
                                 AppCubit.get(context).LikeProduct(token: access_token, id: product_id);
                               },
-                              icon: const ImageIcon(AssetImage("assets/images/heart_icon.png"),),
+                              icon: const Icon(Icons.favorite_border),
                             ),
                           ],
                         ),

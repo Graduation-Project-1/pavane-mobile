@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/constants/colors.dart';
 import 'package:pavane/models/UserModel.dart';
 import 'package:pavane/view/setting/setting_screen.dart';
-
 import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
@@ -69,7 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               left: 9.w,
                               child: CircleAvatar(
                                 radius: 80.r,
-                                backgroundImage: NetworkImage(userModel!.data!.image.toString()),
+                                backgroundImage: const AssetImage('assets/images/person-icon.png'),
+                                // backgroundImage: NetworkImage(userModel!.data!.image.toString()),
                               ),
                             ),
                           ],
