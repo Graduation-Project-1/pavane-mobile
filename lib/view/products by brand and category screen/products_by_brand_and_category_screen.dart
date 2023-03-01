@@ -106,7 +106,7 @@ class _ProductsByBrandAndCategoryScreenState extends State<ProductsByBrandAndCat
           isLoadingMore = true;
         });
         page = page + 1;
-        AppCubit.get(context).GetProductsByCat(page: page.toString(), token: access_token, cat_id: cat_id);
+        AppCubit.get(context).GetProductsByBrandAndCat(page: page.toString(), token: access_token, cat_id: cat_id, brand_id: brand_id);
       }
     }
   }

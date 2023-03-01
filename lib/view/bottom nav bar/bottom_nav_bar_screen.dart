@@ -9,32 +9,24 @@ import '../fitting room/fitting_room_screen.dart';
 import '../profile/profile_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
-
   @override
   State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
 }
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
-
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.house_fill),
         title: ("Home"),
-        textStyle: TextStyle(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w600
-        ),
+        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
         activeColorPrimary: depOrange,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.library_books),
         title: ("Library"),
-        textStyle: TextStyle(
-            fontSize: 15.sp,
-            fontWeight: FontWeight.w600
-        ),
+        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
         activeColorPrimary: depOrange,
         inactiveColorPrimary: black,
       ),
@@ -43,20 +35,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           AssetImage("assets/images/fitting.png"),
         ),
         title: ("Fitting"),
-        textStyle: TextStyle(
-            fontSize: 15.sp,
-            fontWeight: FontWeight.w600
-        ),
+        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
         activeColorPrimary: depOrange,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.person_fill),
         title: ("Profile"),
-        textStyle: TextStyle(
-            fontSize: 15.sp,
-            fontWeight: FontWeight.w600
-        ),
+        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
         activeColorPrimary: depOrange,
         inactiveColorPrimary: black,
       ),
@@ -72,12 +58,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     ];
   }
 
-  final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
+      hideNavigationBarWhenKeyboardShows: true,
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),

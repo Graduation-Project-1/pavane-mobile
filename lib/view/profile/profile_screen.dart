@@ -89,8 +89,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(context, MaterialPageRoute(builder: ((context) => PersonalDataScreen(userModel))));
                     }),
                     SizedBox(height: 10.h,),
-                    RowBuilder(icon: Icons.list, title: "Wishlist", function: (){}),
-                    SizedBox(height: 10.h,),
                     RowBuilder(icon: Icons.favorite_border, title: "Likes", function: (){}),
                     SizedBox(height: 10.h,),
                     RowBuilder(icon: Icons.settings, title: "Settings", function: (){

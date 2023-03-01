@@ -506,7 +506,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 )
                             ),
                             onPressed: (){
-                              print(emailController.text);
                               if(formKey.currentState!.validate()){
                                if(passwordController.text == confirmPasswordController.text){
                                  AppCubit.get(context).Register(
