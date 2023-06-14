@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pavane/view/authentication/login_screen.dart';
@@ -5,7 +7,6 @@ import 'package:pavane/view/authentication/register_screen.dart';
 import '../../constants/colors.dart';
 
 class LoginOrRegisterScreen extends StatefulWidget {
-
   @override
   State<LoginOrRegisterScreen> createState() => _LoginOrRegisterScreenState();
 }
@@ -22,21 +23,20 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
           Container(
             width: double.infinity,
             height: 300.h,
-            margin: const EdgeInsets.all(0),
-            padding: const EdgeInsets.all(0),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: AssetImage("assets/images/cover.png"),
-                fit: BoxFit.cover
-              ),
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(70.r), bottomLeft: Radius.circular(70.r)),
+                  image: AssetImage("assets/images/cover.png"),
+                  fit: BoxFit.cover),
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(70.r),
+                  bottomLeft: Radius.circular(70.r)),
             ),
           ),
           SizedBox(
             height: 40.h,
           ),
           Text(
-              "Find Your\nFavorite Clothes",
+            "Find Your\nFavorite Clothes",
             style: TextStyle(
               fontSize: 35.sp,
               fontWeight: FontWeight.bold,
@@ -67,40 +67,43 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => RegisterScreen())));
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => RegisterScreen())));
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: depOrange,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r), topRight: Radius.circular(20.r), bottomLeft: Radius.circular(10.r), bottomRight: Radius.circular(20.r))
-                      ),
+                          color: depOrange,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              topRight: Radius.circular(20.r),
+                              bottomLeft: Radius.circular(10.r),
+                              bottomRight: Radius.circular(20.r))),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         child: Text(
-                            "Register",
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 20.sp
-                          ),
+                          "Register",
+                          style: TextStyle(color: white, fontSize: 20.sp),
                         ),
                       ),
                     ),
                   ),
                   InkWell(
-                    onTap: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => LoginScreen())));
                     },
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15, left: 30),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              color: depOrange,
-                              fontSize: 20.sp
-                          ),
-                        ),
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(top: 15, bottom: 15, left: 30),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: depOrange, fontSize: 20.sp),
                       ),
                     ),
                   ),

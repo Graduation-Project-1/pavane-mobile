@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 class BrandModel {
   BrandModel({
       this.success, 
@@ -67,7 +69,7 @@ class Data {
   String? role;
   int? numberOfLikes;
   int? numberOfReviews;
-  int? averageRate;
+  var averageRate;
   List<String>? phone;
   List<CategoryList>? categoryList;
   String? image;

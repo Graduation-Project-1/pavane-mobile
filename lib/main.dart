@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, state) {
           return ScreenUtilInit(
             designSize: const Size(414, 736),
+            minTextAdapt: true,
             builder: (context, child) => MaterialApp(
               title: 'PAVANE',
               debugShowCheckedModeBanner: false,

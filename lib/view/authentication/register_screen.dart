@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +11,12 @@ import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
 
-
 class RegisterScreen extends StatefulWidget {
-
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -31,24 +30,140 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
   String? gender;
 
-  final List<String> dayList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+  final List<String> dayList = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31'
+  ];
   String? day;
 
-  final List<String> monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  final List<String> monthList = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
   String? month;
 
-  final List<String> yearsList = ['2012', '2011' ,'2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002', '2001', '2000', '1999', '1998', '1997', '1996', '1995', '1994', '1993', '1992', '1991', '1990', '1989', '1988', '1987', '1986', '1985,' '1984', '1983', '1982', '1981', '1980', '1979', '1978', '1977', '1976', '1975', '1974', '1973', '1972', '1971', '1970', '1969', '1968', '1967', '1966', '1965', '1964', '1963', '1962', '1961', '1960', '1959', '1958', '1957', '1956', '1955', '1954', '1953', '1952', '1951', '1950', '1949', '1948', '1947', '1946', '1945', '1944', '1943', '1942', '1941', '1940'];
+  final List<String> yearsList = [
+    '2012',
+    '2011',
+    '2010',
+    '2009',
+    '2008',
+    '2007',
+    '2006',
+    '2005',
+    '2004',
+    '2003',
+    '2002',
+    '2001',
+    '2000',
+    '1999',
+    '1998',
+    '1997',
+    '1996',
+    '1995',
+    '1994',
+    '1993',
+    '1992',
+    '1991',
+    '1990',
+    '1989',
+    '1988',
+    '1987',
+    '1986',
+    '1985,' '1984',
+    '1983',
+    '1982',
+    '1981',
+    '1980',
+    '1979',
+    '1978',
+    '1977',
+    '1976',
+    '1975',
+    '1974',
+    '1973',
+    '1972',
+    '1971',
+    '1970',
+    '1969',
+    '1968',
+    '1967',
+    '1966',
+    '1965',
+    '1964',
+    '1963',
+    '1962',
+    '1961',
+    '1960',
+    '1959',
+    '1958',
+    '1957',
+    '1956',
+    '1955',
+    '1954',
+    '1953',
+    '1952',
+    '1951',
+    '1950',
+    '1949',
+    '1948',
+    '1947',
+    '1946',
+    '1945',
+    '1944',
+    '1943',
+    '1942',
+    '1941',
+    '1940'
+  ];
   String? year;
 
   var formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state){
-
-        if(state is RegisterSuccessState){
+      listener: (context, state) {
+        if (state is RegisterSuccessState) {
           Fluttertoast.showToast(
               msg: "Register Success",
               toastLength: Toast.LENGTH_SHORT,
@@ -56,12 +171,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               timeInSecForIosWeb: 3,
               backgroundColor: Colors.green,
               textColor: Colors.white,
-              fontSize: 16.0
-          );
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
+              fontSize: 16.0);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: ((context) => LoginScreen())));
         }
 
-        if(state is RegisterErrorState){
+        if (state is RegisterErrorState) {
           Fluttertoast.showToast(
               msg: state.error.toString(),
               toastLength: Toast.LENGTH_SHORT,
@@ -69,12 +184,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               timeInSecForIosWeb: 3,
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              fontSize: 16.0
-          );
+              fontSize: 16.0);
         }
-
       },
-      builder: (context, state){
+      builder: (context, state) {
         return Form(
           key: formKey,
           child: Scaffold(
@@ -89,8 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/images/Login.png"),
-                        fit: BoxFit.cover
-                    ),
+                        fit: BoxFit.cover),
                   ),
                 ),
                 Padding(
@@ -99,7 +211,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: 165.h,),
+                        SizedBox(
+                          height: 165.h,
+                        ),
                         Text(
                           "Create Account",
                           style: TextStyle(
@@ -107,7 +221,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -119,17 +235,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter your name';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Name",
                               prefixIcon: const Icon(
                                 Icons.person_outline,
@@ -142,7 +264,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -153,21 +277,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'please enter your email address';
-                              }
-                              else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                              } else if (!RegExp(
+                                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                  .hasMatch(value)) {
                                 return 'please enter correct email';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Email",
                               prefixIcon: const Icon(
                                 Icons.alternate_email,
@@ -180,7 +311,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -193,17 +326,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter your password';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Password",
                               prefixIcon: const Icon(
                                 Icons.lock_outlined,
@@ -212,12 +351,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               suffixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: InkWell(
-                                  onTap: (){
-                                    AppCubit.get(context).changePasswordVisibility();
+                                  onTap: () {
+                                    AppCubit.get(context)
+                                        .changePasswordVisibility();
                                   },
                                   child: Icon(
                                     AppCubit.get(context).suffix,
-                                    color: const Color.fromRGBO(248, 153, 54, 1),
+                                    color:
+                                        const Color.fromRGBO(248, 153, 54, 1),
                                   ),
                                 ),
                               ),
@@ -228,7 +369,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -241,17 +384,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter your password';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Confirm Password",
                               prefixIcon: const Icon(
                                 Icons.lock_outlined,
@@ -260,12 +409,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               suffixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: InkWell(
-                                  onTap: (){
-                                    AppCubit.get(context).changePasswordVisibility();
+                                  onTap: () {
+                                    AppCubit.get(context)
+                                        .changePasswordVisibility();
                                   },
                                   child: Icon(
                                     AppCubit.get(context).suffix,
-                                    color: const Color.fromRGBO(248, 153, 54, 1),
+                                    color:
+                                        const Color.fromRGBO(248, 153, 54, 1),
                                   ),
                                 ),
                               ),
@@ -276,7 +427,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -288,17 +441,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter your phone';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Phone",
                               prefixIcon: const Icon(
                                 Icons.phone,
@@ -311,7 +470,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -323,17 +484,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter your address';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0.r)),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0.r)),
                               ),
-                              contentPadding: const EdgeInsets.only(left: 25, top: 15, bottom: 10, right: 10),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 25, top: 15, bottom: 10, right: 10),
                               hintText: "Address",
                               prefixIcon: const Icon(
                                 Icons.location_on,
@@ -346,7 +513,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Material(
                           borderRadius: BorderRadius.circular(10.r),
                           elevation: 3,
@@ -362,8 +531,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             isExpanded: true,
                             hint: Row(
                               children: [
-                                Image.asset("assets/images/gender.png", scale: 4.sp,),
-                                SizedBox(width: 15.w,),
+                                Image.asset(
+                                  "assets/images/gender.png",
+                                  scale: 4.sp,
+                                ),
+                                SizedBox(
+                                  width: 15.w,
+                                ),
                                 Text(
                                   'Select Your Gender',
                                   style: TextStyle(
@@ -379,29 +553,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             iconSize: 30,
                             buttonHeight: 50,
-                            buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                            buttonPadding:
+                                const EdgeInsets.only(left: 0, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             items: genderItems
-                                .map((item) =>
-                                DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                    ),
-                                  ),
-                                ))
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                    ))
                                 .toList(),
                             onSaved: (value) {
                               gender = value.toString();
                             },
-                            onChanged: (value){},
+                            onChanged: (value) {},
                           ),
                         ),
-                        SizedBox(height: 10.h,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -419,7 +595,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   dropdownWidth: 110.w,
                                   buttonDecoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
-                                    border: Border.all(color: Colors.transparent),
+                                    border:
+                                        Border.all(color: Colors.transparent),
                                     color: white,
                                   ),
                                   dropdownItems: dayList,
@@ -432,7 +609,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 15.h,),
+                            SizedBox(
+                              width: 15.h,
+                            ),
                             Expanded(
                               child: Material(
                                 borderRadius: BorderRadius.circular(10.r),
@@ -448,7 +627,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   dropdownWidth: 110.w,
                                   buttonDecoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
-                                    border: Border.all(color: Colors.transparent),
+                                    border:
+                                        Border.all(color: Colors.transparent),
                                     color: white,
                                   ),
                                   dropdownItems: monthList,
@@ -461,7 +641,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 15.h,),
+                            SizedBox(
+                              width: 15.h,
+                            ),
                             Expanded(
                               child: Material(
                                 borderRadius: BorderRadius.circular(10.r),
@@ -477,9 +659,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   dropdownWidth: 110.w,
                                   buttonDecoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      border: Border.all(color: Colors.transparent),
-                                      color: white
-                                  ),
+                                      border:
+                                          Border.all(color: Colors.transparent),
+                                      color: white),
                                   dropdownItems: yearsList,
                                   value: year,
                                   onChanged: (value) {
@@ -492,119 +674,64 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 25.h,),
+                        SizedBox(
+                          height: 25.h,
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 60.w),
                           child: ElevatedButton(
                             style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                backgroundColor: MaterialStateProperty.all<Color>(depOrange),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(depOrange),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    )
-                                )
-                            ),
-                            onPressed: (){
-                              if(formKey.currentState!.validate()){
-                               if(passwordController.text == confirmPasswordController.text){
-                                 AppCubit.get(context).Register(
-                                     name: nameController.text,
-                                     email: emailController.text,
-                                     password: passwordController.text,
-                                     phone: phoneController.text,
-                                     dateOfBirth: "$month $day, $year",
-                                     location: addressController.text,
-                                     gender: gender.toString(),
-                                 );
-                               }else{
-                                 Fluttertoast.showToast(
-                                     msg: "You enter two different passwords",
-                                     toastLength: Toast.LENGTH_SHORT,
-                                     gravity: ToastGravity.TOP,
-                                     timeInSecForIosWeb: 3,
-                                     backgroundColor: Colors.red,
-                                     textColor: Colors.white,
-                                     fontSize: 16.0
-                                 );
-                               }
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ))),
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                if (passwordController.text ==
+                                    confirmPasswordController.text) {
+                                  AppCubit.get(context).Register(
+                                    name: nameController.text,
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    phone: phoneController.text,
+                                    dateOfBirth: "$month $day, $year",
+                                    location: addressController.text,
+                                    gender: gender.toString(),
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "You enter two different passwords",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 3,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                }
                               }
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 8.h),
-                              child: state is RegisterLoadingState? const CircularProgressIndicator(color: white,) : Text(
-                                  "SIGN UP",
-                                  style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.bold
-                                  )
-                              ),
+                              child: state is RegisterLoadingState
+                                  ? const CircularProgressIndicator(
+                                      color: white,
+                                    )
+                                  : Text("SIGN UP",
+                                      style: TextStyle(
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.bold)),
                             ),
                           ),
                         ),
-                        SizedBox(height: 25.h,),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 1.h,
-                                color: black,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 25.w),
-                              child: Text(
-                                "Or continue with",
-                                style: TextStyle(
-                                    fontSize: 15.sp
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 1.h,
-                                color: black,
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          height: 30.h,
                         ),
-                        SizedBox(height: 25.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: (){
-
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: depOrange),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                                  child: Image.asset("assets/images/facebook.png"),
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: (){
-
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: depOrange),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                                  child: Image.asset("assets/images/google.png"),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 40.h,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -614,10 +741,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontSize: 15.sp,
                               ),
                             ),
-                            SizedBox(width: 5.w,),
+                            SizedBox(
+                              width: 5.w,
+                            ),
                             InkWell(
-                              onTap: (){
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginScreen())));
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => LoginScreen())));
                               },
                               child: Text(
                                 "Sign in",
@@ -629,7 +761,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20.h,),
+                        SizedBox(
+                          height: 20.h,
+                        ),
                       ],
                     ),
                   ),

@@ -1,8 +1,10 @@
-import 'package:bloc/bloc.dart';
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pavane/bloc/state.dart';
 import '../dio/dio_helper.dart';
+import '../models/AdsModel.dart';
 import '../models/AllBrandsModel.dart';
 import '../models/AllCategoriesModel.dart';
 import '../models/AllCollectionsModel.dart';
@@ -15,6 +17,7 @@ import '../models/LikedProductsModel.dart';
 import '../models/LoginModel.dart';
 import '../models/ProductModel.dart';
 import '../models/RegisterModel.dart';
+import '../models/ReviewModel.dart';
 import '../models/UserModel.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -683,6 +686,141 @@ class AppCubit extends Cubit<AppStates> {
     ).catchError((error)
     {
       emit(GetAllBrandsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  AdsModel? adsModel;
+
+  void GetAds({
+    required String token,
+  })
+  {
+    emit(GetAdsLoadingState());
+    DioHelper.getData(
+      url: 'getAllAdvertisement',
+      token: token,
+    ).then((value)
+    {
+      adsModel = AdsModel.fromJson(value.data);
+      emit(GetAdsSuccessState(adsModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetAdsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+
+  ReviewModel? reviewModel;
+
+  void GetProductReviews({
+    required String token,
+    required String id,
+    var page = 1,
+    var size = 10,
+  })
+  {
+    emit(GetProductReviewsLoadingState());
+    DioHelper.getData(
+      url: 'getAllItemReviews/$id?page=$page&size=$size',
+      token: token,
+    ).then((value)
+    {
+      reviewModel = ReviewModel.fromJson(value.data);
+      emit(GetProductReviewsSuccessState(reviewModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetProductReviewsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  void AddProductReview({
+    required String token,
+    required String product_id,
+    required var rate,
+    required String comment,
+  })
+  {
+    emit(AddProductReviewLoadingState());
+    DioHelper.postData(
+      url: 'addItemReview',
+      token: token,
+      data: {
+        "rate" : rate,
+        "comment" :comment,
+        "itemId" : product_id
+      },
+    ).then((value)
+    {
+      emit(AddProductReviewSuccessState());
+    }
+    ).catchError((error)
+    {
+      emit(AddProductReviewErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  void AddBrandReview({
+    required String token,
+    required String brand_id,
+    required var rate,
+    required String comment,
+  })
+  {
+    emit(AddBrandReviewLoadingState());
+    DioHelper.postData(
+      url: 'addBrandReview',
+      token: token,
+      data: {
+        "rate" : rate,
+        "comment" :comment,
+        "brandId" : brand_id
+      },
+    ).then((value)
+    {
+      emit(AddBrandReviewSuccessState());
+    }
+    ).catchError((error)
+    {
+      emit(AddBrandReviewErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  void GetBrandReviews({
+    required String token,
+    required String id,
+    var page = 1,
+    var size = 10,
+  })
+  {
+    emit(GetBrandReviewsLoadingState());
+    DioHelper.getData(
+      url: 'getAllBrandReviews/$id?page=$page&size=$size',
+      token: token,
+    ).then((value)
+    {
+      reviewModel = ReviewModel.fromJson(value.data);
+      emit(GetBrandReviewsSuccessState(reviewModel!));
+    }
+    ).catchError((error)
+    {
+      emit(GetBrandReviewsErrorState(error.response.data['message'].toString()));
       print("******************************");
       print(error.response.data.toString());
       print("******************************");

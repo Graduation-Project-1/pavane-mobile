@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, no_logic_in_create_state
+
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +8,15 @@ import '../../constants/colors.dart';
 import '../../models/UserModel.dart';
 
 class PersonalDataScreen extends StatefulWidget {
-
   UserModel? userModel;
   PersonalDataScreen(this.userModel);
 
   @override
-  State<PersonalDataScreen> createState() => _PersonalDataScreenState(userModel);
+  State<PersonalDataScreen> createState() =>
+      _PersonalDataScreenState(userModel);
 }
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
-
   UserModel? userModel;
   _PersonalDataScreenState(this.userModel);
 
@@ -30,13 +31,132 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   String? gender;
 
-  final List<String> dayList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+  final List<String> dayList = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31'
+  ];
   String? day;
 
-  final List<String> monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  final List<String> monthList = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
   String? month;
 
-  final List<String> yearsList = ['2012', '2011' ,'2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002', '2001', '2000', '1999', '1998', '1997', '1996', '1995', '1994', '1993', '1992', '1991', '1990', '1989', '1988', '1987', '1986', '1985,' '1984', '1983', '1982', '1981', '1980', '1979', '1978', '1977', '1976', '1975', '1974', '1973', '1972', '1971', '1970', '1969', '1968', '1967', '1966', '1965', '1964', '1963', '1962', '1961', '1960', '1959', '1958', '1957', '1956', '1955', '1954', '1953', '1952', '1951', '1950', '1949', '1948', '1947', '1946', '1945', '1944', '1943', '1942', '1941', '1940'];
+  final List<String> yearsList = [
+    '2012',
+    '2011',
+    '2010',
+    '2009',
+    '2008',
+    '2007',
+    '2006',
+    '2005',
+    '2004',
+    '2003',
+    '2002',
+    '2001',
+    '2000',
+    '1999',
+    '1998',
+    '1997',
+    '1996',
+    '1995',
+    '1994',
+    '1993',
+    '1992',
+    '1991',
+    '1990',
+    '1989',
+    '1988',
+    '1987',
+    '1986',
+    '1985',
+    '1984',
+    '1983',
+    '1982',
+    '1981',
+    '1980',
+    '1979',
+    '1978',
+    '1977',
+    '1976',
+    '1975',
+    '1974',
+    '1973',
+    '1972',
+    '1971',
+    '1970',
+    '1969',
+    '1968',
+    '1967',
+    '1966',
+    '1965',
+    '1964',
+    '1963',
+    '1962',
+    '1961',
+    '1960',
+    '1959',
+    '1958',
+    '1957',
+    '1956',
+    '1955',
+    '1954',
+    '1953',
+    '1952',
+    '1951',
+    '1950',
+    '1949',
+    '1948',
+    '1947',
+    '1946',
+    '1945',
+    '1944',
+    '1943',
+    '1942',
+    '1941',
+    '1940'
+  ];
   String? year;
 
   @override
@@ -54,10 +174,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         title: Text(
           'Edit Profile',
           style: TextStyle(
-              color: depOrange,
-              fontSize: 35.sp,
-              fontFamily: "Roller"
-          ),
+              color: depOrange, fontSize: 35.sp, fontFamily: "Roller"),
         ),
       ),
       body: Padding(
@@ -66,7 +183,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 5.h,),
+              SizedBox(
+                height: 5.h,
+              ),
               Center(
                 child: SizedBox(
                   width: 170.w,
@@ -82,25 +201,29 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       ),
                       CircleAvatar(
                         radius: 80.r,
-                        backgroundImage: NetworkImage(userModel!.data!.image.toString()),
+                        backgroundImage:
+                            NetworkImage(userModel!.data!.image.toString()),
                       ),
                       InkWell(
-                        onTap: (){
-
-                        },
+                        onTap: () {},
                         child: CircleAvatar(
                           backgroundColor: depOrange,
                           radius: 17.sp,
-                          child: const Icon(Icons.edit, color: white,),
+                          child: const Icon(
+                            Icons.edit,
+                            color: white,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
-                  "Name",
+                "Name",
                 style: TextStyle(
                   fontSize: 25.sp,
                   color: const Color.fromRGBO(129, 129, 129, 1),
@@ -114,7 +237,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: depOrange),
                   ),
-                  contentPadding: const EdgeInsets.only(left: 5, top: 15, bottom: 10, right: 10),
+                  contentPadding: const EdgeInsets.only(
+                      left: 5, top: 15, bottom: 10, right: 10),
                   hintText: "Name",
                   hintStyle: TextStyle(
                     fontSize: 20.sp,
@@ -122,7 +246,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
                 "Email",
                 style: TextStyle(
@@ -138,7 +264,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: depOrange),
                   ),
-                  contentPadding: const EdgeInsets.only(left: 5, top: 15, bottom: 10, right: 10),
+                  contentPadding: const EdgeInsets.only(
+                      left: 5, top: 15, bottom: 10, right: 10),
                   hintText: "Email",
                   hintStyle: TextStyle(
                     fontSize: 20.sp,
@@ -146,7 +273,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
                 "Password",
                 style: TextStyle(
@@ -163,7 +292,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: depOrange),
                   ),
-                  contentPadding: const EdgeInsets.only(left: 5, top: 15, bottom: 10, right: 10),
+                  contentPadding: const EdgeInsets.only(
+                      left: 5, top: 15, bottom: 10, right: 10),
                   hintText: "Password",
                   hintStyle: TextStyle(
                     fontSize: 20.sp,
@@ -171,7 +301,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
                 "Gender",
                 style: TextStyle(
@@ -205,24 +337,24 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
                 ),
-                items: genderItems
-                    .map((item) =>
-                    DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                    ))
+                items: genderItems.map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                            ),
+                          ),
+                        ))
                     .toList(),
                 onSaved: (value) {
                   gender = value.toString();
                 },
-                onChanged: (value){},
+                onChanged: (value) {},
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
                 "Date Of Birth",
                 style: TextStyle(
@@ -230,12 +362,19 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   color: const Color.fromRGBO(129, 129, 129, 1),
                 ),
               ),
-              SizedBox(height: 10.h,),
+              SizedBox(
+                height: 10.h,
+              ),
               Row(
                 children: [
                   Expanded(
                     child: CustomDropdownButton2(
-                      hint: userModel!.data!.dateOfBirth!.split("-").elementAt(2)[0] + userModel!.data!.dateOfBirth!.split("-").elementAt(2)[1],
+                      hint: userModel!.data!.dateOfBirth!
+                              .split("-")
+                              .elementAt(2)[0] +
+                          userModel!.data!.dateOfBirth!
+                              .split("-")
+                              .elementAt(2)[1],
                       icon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
                         color: Color.fromRGBO(98, 98, 98, 1),
@@ -261,10 +400,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 15.h,),
+                  SizedBox(
+                    width: 15.h,
+                  ),
                   Expanded(
                     child: CustomDropdownButton2(
-                      hint: userModel!.data!.dateOfBirth!.split("-").elementAt(1),
+                      hint:
+                          userModel!.data!.dateOfBirth!.split("-").elementAt(1),
                       icon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
                         color: Color.fromRGBO(98, 98, 98, 1),
@@ -290,10 +432,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       },
                     ),
                   ),
-                  SizedBox(width: 15.h,),
+                  SizedBox(
+                    width: 15.h,
+                  ),
                   Expanded(
                     child: CustomDropdownButton2(
-                      hint: userModel!.data!.dateOfBirth!.split("-").elementAt(0),
+                      hint:
+                          userModel!.data!.dateOfBirth!.split("-").elementAt(0),
                       icon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
                         color: Color.fromRGBO(98, 98, 98, 1),
@@ -321,32 +466,33 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 25.h,),
+              SizedBox(
+                height: 25.h,
+              ),
               Center(
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(depOrange),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(depOrange),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                          )
-                      )
-                  ),
-                  onPressed: (){},
+                        borderRadius: BorderRadius.circular(10.r),
+                      ))),
+                  onPressed: () {},
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 50.w),
-                    child: Text(
-                        "Confirm",
+                    padding:
+                        EdgeInsets.symmetric(vertical: 5.h, horizontal: 50.w),
+                    child: Text("Confirm",
                         style: TextStyle(
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.bold
-                        )
-                    ),
+                            fontSize: 25.sp, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),
-              SizedBox(height: 25.h,),
+              SizedBox(
+                height: 25.h,
+              ),
             ],
           ),
         ),

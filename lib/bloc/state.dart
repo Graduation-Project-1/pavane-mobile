@@ -1,3 +1,6 @@
+import 'package:pavane/models/AdsModel.dart';
+import 'package:pavane/models/ReviewModel.dart';
+
 import '../models/AllBrandsModel.dart';
 import '../models/AllCategoriesModel.dart';
 import '../models/AllCollectionsModel.dart';
@@ -236,7 +239,61 @@ class LikeCollectionLoadingState extends AppStates {}
 
 class LikeCollectionSuccessState extends AppStates {}
 
-class  LikeCollectionErrorState extends AppStates {
+class LikeCollectionErrorState extends AppStates {
   final String error;
   LikeCollectionErrorState(this.error);
+}
+
+class GetAdsLoadingState extends AppStates {}
+
+class GetAdsSuccessState extends AppStates {
+  final AdsModel adsModel;
+  GetAdsSuccessState(this.adsModel);
+}
+
+class  GetAdsErrorState extends AppStates {
+  final String error;
+  GetAdsErrorState(this.error);
+}
+
+class GetProductReviewsLoadingState extends AppStates {}
+
+class GetProductReviewsSuccessState extends AppStates {
+  final ReviewModel reviewModel;
+  GetProductReviewsSuccessState(this.reviewModel);
+}
+
+class  GetProductReviewsErrorState extends AppStates {
+  final String error;
+  GetProductReviewsErrorState(this.error);
+}
+
+class AddProductReviewLoadingState extends AppStates {}
+
+class AddProductReviewSuccessState extends AppStates {}
+
+class AddProductReviewErrorState extends AppStates {
+  final String error;
+  AddProductReviewErrorState(this.error);
+}
+
+class AddBrandReviewLoadingState extends AppStates {}
+
+class AddBrandReviewSuccessState extends AppStates {}
+
+class AddBrandReviewErrorState extends AppStates {
+  final String error;
+  AddBrandReviewErrorState(this.error);
+}
+
+class GetBrandReviewsLoadingState extends AppStates {}
+
+class GetBrandReviewsSuccessState extends AppStates {
+  final ReviewModel reviewModel;
+  GetBrandReviewsSuccessState(this.reviewModel);
+}
+
+class  GetBrandReviewsErrorState extends AppStates {
+  final String error;
+  GetBrandReviewsErrorState(this.error);
 }

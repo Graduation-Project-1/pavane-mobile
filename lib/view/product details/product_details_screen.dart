@@ -1,9 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, non_constant_identifier_names, no_logic_in_create_state
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, non_constant_identifier_names, no_logic_in_create_state, prefer_typing_uninitialized_variables
 
 import 'package:carousel_nullsafety/carousel_nullsafety.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pavane/constants/colors.dart';
@@ -14,6 +15,8 @@ import '../../bloc/state.dart';
 import '../../constants/product_card.dart';
 import '../../models/AllProductsModel.dart';
 import '../../models/ProductModel.dart';
+import '../../models/ReviewModel.dart';
+import 'all_product_reviews_screen.dart';
 
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -33,13 +36,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool get_details = false;
   AllProductsModel? allProductsModel;
   bool get_products = false;
+  ReviewModel? reviewsModel;
+  bool get_reviews = false;
+
+  var reviewController = TextEditingController();
+  var final_rate;
 
   var access_token = CacheHelper.getData(key: 'access_token');
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..GetProduct(token: access_token, id: product_id)..GetAllProducts(token: access_token, page: "1"),
+      create: (BuildContext context) => AppCubit()..GetProduct(token: access_token, id: product_id)..GetAllProducts(token: access_token, page: "1")..GetProductReviews(token: access_token, id: product_id),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state){
           if(state is GetProductSuccessState){
@@ -49,6 +57,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           if(state is GetAllProductsSuccessState){
             allProductsModel = state.allProductsModel;
             get_products = true;
+          }
+          if(state is GetProductReviewsSuccessState){
+            reviewsModel = state.reviewModel;
+            get_reviews = true;
           }
           if(state is LikeProductSuccessState){
             Fluttertoast.showToast(
@@ -72,12 +84,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 fontSize: 16.0
             );
           }
+          if(state is AddProductReviewSuccessState){
+            Fluttertoast.showToast(
+                msg: "Review Added",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          if(state is AddProductReviewErrorState){
+            Fluttertoast.showToast(
+                msg: state.error.toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
         },
         builder: (context, state){
           return Scaffold(
             backgroundColor: white,
             body: ConditionalBuilder(
-              condition: get_details && get_products,
+              condition: get_details && get_products && get_reviews,
               fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
               builder: (context) => Stack(
                 children: [
@@ -245,31 +279,172 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   physics: const NeverScrollableScrollPhysics(),
                                 ),
                               ),
-                              // SizedBox(height: 15.h,),
-                              // productModel!.data!.colors!.isEmpty ? Container() : Text(
-                              //   "Available Colors",
-                              //   style: TextStyle(
-                              //       fontSize: 20.sp,
-                              //       fontWeight: FontWeight.w600
-                              //   ),
-                              // ),
-                              // productModel!.data!.colors!.isEmpty ? Container() : SizedBox(height: 10.h,),
-                              // productModel!.data!.colors!.isEmpty ? Container() : SizedBox(
-                              //   height: 40,
-                              //   child: ListView.separated(
-                              //     itemBuilder: (context, index) => Container(
-                              //       width: 40.w,
-                              //       decoration: BoxDecoration(
-                              //         color: Colors.red,
-                              //         borderRadius: BorderRadius.circular(10.r),
-                              //       ),
-                              //     ),
-                              //     separatorBuilder: (context, index) => SizedBox(width: 15.w,),
-                              //     itemCount: productModel!.data!.colors!.length,
-                              //     scrollDirection: Axis.horizontal,
-                              //     physics: const NeverScrollableScrollPhysics(),
-                              //   ),
-                              // ),
+                              SizedBox(height: 15.h,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Reviews",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600, fontSize: 20.sp),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: ((context) => AllProductReviewsScreen(product_id))));
+                                    },
+                                    child: Text(
+                                      "SEE ALL",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.sp,
+                                          color: depOrange),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) => Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(radius: 13.r, backgroundColor: Colors.grey, child: const Icon(Icons.person, color: Colors.white,),),
+                                              SizedBox(width: 10.w,),
+                                              Text(reviewsModel!.data![index].customerId!.name!.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                reviewsModel!.data![index].rate!.toString(),
+                                                style: TextStyle(
+                                                    color: depOrange,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18.sp
+                                                ),
+                                              ),
+                                              Icon(Icons.star, color: depOrange, size: 20.sp,),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(reviewsModel!.data![index].comment!.toString()),
+                                      ),
+                                    ],
+                                  ),
+                                  separatorBuilder: (context, index) => Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    child: Container(height: 1.h, width: double.infinity, color: Colors.grey.shade300,),
+                                  ),
+                                  itemCount: reviewsModel!.data!.length > 5 ? 5 : reviewsModel!.data!.length,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                ),
+                              ),
+
+                              SizedBox(height: 15.h,),
+                              Text(
+                                "Add Review",
+                                style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+                                child: RatingBar.builder(
+                                  initialRating: 0,
+                                  minRating: .5,
+                                  glow: false,
+                                  itemSize: 25,
+                                  ignoreGestures: false,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: depOrange,
+                                  ),
+                                  onRatingUpdate: (value) {
+                                    final_rate = value;
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+                                child: TextFormField(
+                                  controller: reviewController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  cursorColor: depOrange,
+                                  minLines: 3,
+                                  maxLines: 10,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      borderSide: const BorderSide(
+                                        color: depOrange,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                        width: 2.0.w,
+                                      ),
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                        left: 25.w, top: 20.h, bottom: 20.h, right: 10.w),
+                                    hintText: "Write Review",
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    hintStyle: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: const Color.fromRGBO(134, 129, 124, 1),
+                                        fontFamily: "Open_Sans"),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Center(
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).AddProductReview(token: access_token, product_id: product_id, rate: final_rate, comment: reviewController.text);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0.r))),
+                                    side: MaterialStateProperty.all(const BorderSide(
+                                      color: depOrange,
+                                    )),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 120.w, vertical: 10.h),
+                                    child: state is AddProductReviewLoadingState? const CircularProgressIndicator(color: depOrange,) : Text(
+                                      "Confirm",
+                                      style: TextStyle(
+                                        fontSize: 17.sp,
+                                        fontFamily: "Open_Sans",
+                                        color: depOrange,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
                               SizedBox(height: 15.h,),
                               Text(
                                 "Similar Products",

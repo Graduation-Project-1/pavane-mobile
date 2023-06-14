@@ -1,27 +1,28 @@
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, non_constant_identifier_names, no_logic_in_create_state
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
 import '../../constants/product_card.dart';
 
-class AllProductsScreen extends StatefulWidget {
+class AllBrandProductsScreen extends StatefulWidget {
 
   var brand_id;
-  AllProductsScreen(this.brand_id);
+  AllBrandProductsScreen(this.brand_id);
 
   @override
-  State<AllProductsScreen> createState() => _AllProductsScreenState(brand_id);
+  State<AllBrandProductsScreen> createState() => _AllBrandProductsScreenState(brand_id);
 }
 
-class _AllProductsScreenState extends State<AllProductsScreen> {
+class _AllBrandProductsScreenState extends State<AllBrandProductsScreen> {
 
   var brand_id;
-  _AllProductsScreenState(this.brand_id);
+  _AllBrandProductsScreenState(this.brand_id);
 
   bool get_all_products = false;
   var access_token = CacheHelper.getData(key: 'access_token');
@@ -35,7 +36,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   @override
   void initState() {
     super.initState();
-    AppCubit.get(context).GetProductsByBrand(token: access_token, page: page.toString(), brand_id: brand_id);
+    AppCubit.get(context).GetProductsByBrand(token: access_token, page: "1", brand_id: brand_id);
     scrollcontroller.addListener(_scrollListener);
   }
 

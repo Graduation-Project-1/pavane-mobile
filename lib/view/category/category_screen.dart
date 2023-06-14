@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, use_key_in_widget_constructors, must_be_immutable, no_logic_in_create_state, non_constant_identifier_names
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import '../../constants/product_card.dart';
 import '../../models/AllBrandsModel.dart';
 import '../../models/AllCollectionsModel.dart';
 import '../../models/AllProductsModel.dart';
+import '../all products/all_cat_products_screen.dart';
 import '../brand profile/brand_profile_screen.dart';
 import '../collection/collection_screen.dart';
 
@@ -86,20 +89,36 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      productsByCatModel!.data!.isEmpty ? Container() : Padding(
-                        padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
-                        child: Text(
-                          "Products",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20.sp
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h, bottom: 10.h, right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Products",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20.sp
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => AllCatProductsScreen(widget.id))));
+                              },
+                              child: Text(
+                                "SEE ALL",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.sp,
+                                    color: depOrange),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      productsByCatModel!.data!.isEmpty ? Container() : SizedBox(
+                      SizedBox(
                         height: 200.h,
-                        child: ListView.separated(
+                        child: productsByCatModel!.data!.isEmpty ? const Center(child: Text("No Products Found")) : ListView.separated(
                           itemBuilder: (context, index) => CardBuilder
                             (context: context,
                               image: productsByCatModel!.data![index].images![0].toString(),
@@ -117,7 +136,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                       SizedBox(height: 15.h,),
 
-                      allBrandsModelByCat!.data!.isEmpty ? Container() : Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 20.w),
                         child: Text(
                           "Brands",
@@ -127,11 +146,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ),
                         ),
                       ),
-                      allBrandsModelByCat!.data!.isEmpty ? Container() : Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: SizedBox(
                           height: 125.h,
-                          child: ListView.separated(
+                          child: allBrandsModelByCat!.data!.isEmpty ? const Center(child: Text("No Brands Found")) : ListView.separated(
                             itemBuilder: (context, index) =>  Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
@@ -165,7 +184,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                       SizedBox(height: 15.h,),
 
-                      allCollectionsByCatModel!.data!.isEmpty ? Container() : Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 20.w),
                         child: Text(
                           "Collections",
@@ -175,11 +194,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ),
                         ),
                       ),
-                      allCollectionsByCatModel!.data!.isEmpty ? Container() : Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: SizedBox(
                           height: 125.h,
-                          child: ListView.separated(
+                          child: allCollectionsByCatModel!.data!.isEmpty ? const Center(child: Text("No Collections Found")) : ListView.separated(
                             itemBuilder: (context, index) => InkWell(
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: ((context) => CollectionScreen(allCollectionsByCatModel!.data![index].id))));
