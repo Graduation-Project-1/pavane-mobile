@@ -21,10 +21,12 @@ import '../all brands/all_brands_screen.dart';
 import '../all categories/all_categories_screen.dart';
 import '../all collections/all_collections_screen.dart';
 import '../all products/all_home_products_screen.dart';
+import '../all sales/all_sales_screen.dart';
 import '../brand profile/brand_profile_screen.dart';
 import '../category/category_screen.dart';
 import '../collection/collection_screen.dart';
 import '../notification/notification_screen.dart';
+import '../sale/sale_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool get_all_collections = false;
   AdsModel? adsModel;
   bool get_ads = false;
+  AllCollectionsModel? allSalesModel;
+  bool get_all_sales = false;
 
   var access_token = CacheHelper.getData(key: 'access_token');
 
@@ -65,7 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ..GetPopularCollections(token: access_token)
         ..GetAllBrands(token: access_token, page: 1)
         ..GetAllCollections(token: access_token, page: 1)
-        ..GetAds(token: access_token),
+        ..GetAds(token: access_token)
+        ..GetAllSales(token: access_token, page: 1),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {
           if (state is GetUserDataSuccessState) {
@@ -103,6 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is GetAdsSuccessState) {
             adsModel = state.adsModel;
             get_ads = true;
+          }
+          if (state is GetAllSalesSuccessState) {
+            allSalesModel = state.allCollectionsModel;
+            get_all_sales = true;
           }
         },
         builder: (context, state) {
@@ -175,7 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   get_popular_collections &&
                   get_all_brands &&
                   get_all_collections &&
-                  get_ads,
+                  get_ads &&
+                  get_all_sales,
               fallback: (context) => Center(
                   child: Image.asset(
                 "assets/images/loader.gif",
@@ -194,7 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(top: 5.h, bottom: 15.h),
                         child: Text(
@@ -206,7 +215,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(right: 20.w, bottom: 15.w),
                         child: Material(
@@ -228,8 +236,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               images: [
                                 for (int i = 0; i < adsModel!.data!.length; i++)
                                   InkWell(
-                                    onTap: (){
-                                      if(adsModel!.data![i].link != null) launchUrl(Uri.parse(adsModel!.data![i].link!.toString()));
+                                    onTap: () {
+                                      if (adsModel!.data![i].link != null) {
+                                        launchUrl(Uri.parse(adsModel!.data![i].link!.toString()));
+                                      }
                                     },
                                     child: Container(
                                       width: double.infinity,
@@ -247,7 +257,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(right: 20.w, bottom: 10.h),
                         child: Row(
@@ -263,8 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: ((context) =>
-                                            AllCategoriesScreen())));
+                                        builder: ((context) => AllCategoriesScreen())));
                               },
                               child: Text(
                                 "SEE ALL",
@@ -280,37 +288,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: 80.h,
                         child: ListView.separated(
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => CategoryScreen(
-                                          allCategoriesModel!.data![index].id,
-                                          allCategoriesModel!.data![index].name))));
-                            },
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://graduation-project-23.s3.amazonaws.com/${allCategoriesModel!.data![index].image}'),
-                                  radius: 30.r,
-                                ),
-                                SizedBox(
-                                  width: 80.w,
-                                  child: Center(
-                                    child: Text(
-                                      allCategoriesModel!.data![index].name.toString(),
-                                      style: TextStyle(fontSize: 15.sp),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                          itemBuilder: (context, index) {
+                            ImageProvider getImage(){
+                              if(allCategoriesModel!.data![index].image != null){
+                                return NetworkImage('https://graduation-project-23.s3.amazonaws.com/${allCategoriesModel!.data![index].image}');
+                              }else{
+                                return const AssetImage("assets/images/icon.png");
+                              }
+                            }
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => CategoryScreen(allCategoriesModel!.data![index].id, allCategoriesModel!.data![index].name))));
+                              },
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: getImage(),
+                                    radius: 30.r,
+                                  ),
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Center(
+                                      child: Text(
+                                        allCategoriesModel!.data![index].name.toString(),
+                                        style: TextStyle(fontSize: 15.sp),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                ],
+                              ),
+                            );
+                          },
                           separatorBuilder: (context, index) => SizedBox(
                             width: 20.w,
                           ),
@@ -318,9 +332,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-
                       Padding(
-                        padding: EdgeInsets.only(top: 15.h, right: 20.w, bottom: 10.h),
+                        padding: EdgeInsets.only(
+                            top: 15.h, right: 20.w, bottom: 10.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -331,7 +345,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: ((context) => AllHomeProductsScreen())));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: ((context) => AllHomeProductsScreen())));
                               },
                               child: Text(
                                 "SEE ALL",
@@ -355,85 +371,65 @@ class _HomeScreenState extends State<HomeScreen> {
                               rate: allProductsModel!.data![index].averageRate.toString(),
                               id: allProductsModel!.data![index].id.toString(),
                               brand: allProductsModel!.data![index].brandId!.name.toString()),
-                          separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 10.w,
+                          ),
                           itemCount: allProductsModel!.data!.length,
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-
                       SizedBox(
                         height: 15.h,
                       ),
-
-                      // popularBrandsModel!.data!.length > 0 ? Text(
-                      //   "Popular Brands",
-                      //   style: TextStyle(
-                      //       fontWeight: FontWeight.w600,
-                      //       fontSize: 20.sp
-                      //   ),
-                      // ) : Container(),
-                      // popularBrandsModel!.data!.length > 0 ? Padding(
-                      //   padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
-                      //   child: SizedBox(
-                      //     height: 85.h,
-                      //     child: ListView.separated(
-                      //       itemBuilder: (context, index) =>  InkWell(
-                      //         onTap: (){
-                      //           Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(popularBrandsModel!.data![index].id.toString()))));
-                      //         },
-                      //         child: Material(
-                      //           borderRadius: BorderRadius.circular(10.r),
-                      //           child: Container(
-                      //             width: 170.w,
-                      //             height: 80.h,
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.circular(10.r),
-                      //               image: DecorationImage(
-                      //                   image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${popularBrandsModel!.data![index].image}'),
-                      //                   fit: BoxFit.cover
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                      //       itemCount: popularBrandsModel!.data!.length,
-                      //       scrollDirection: Axis.horizontal,
-                      //     ),
-                      //   ),
-                      // ) : Container(),
-
-                      // Text(
-                      //   "Popular Products",
-                      //   style: TextStyle(
-                      //       fontWeight: FontWeight.w600,
-                      //       fontSize: 20.sp
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
-                      //   child: SizedBox(
-                      //     height: 180.h,
-                      //     child: ListView.separated(
-                      //       itemBuilder: (context, index) => CardBuilder(context: context, image: PopularProductsModel!.data![index].cover.toString(), name: PopularProductsModel!.data![index].name.toString(), price: PopularProductsModel!.data![index].price.toString(), rate: PopularProductsModel!.data![index].averageRate.toString(), id: PopularProductsModel!.data![index].id.toString()),
-                      //       separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-                      //       itemCount: allProductsModel!.data!.length,
-                      //       scrollDirection: Axis.horizontal,
-                      //     ),
-                      //   ),
-                      // ),
-
+                      popularBrandsModel!.data!.isNotEmpty ? Text(
+                              "Popular Brands",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+                            ) : Container(),
+                      popularBrandsModel!.data!.isNotEmpty ? Padding(
+                              padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
+                              child: SizedBox(
+                                height: 100.h,
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) => Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: ((context) => BrandProfileScreen(popularBrandsModel!.data![index].id.toString()))));
+                                      },
+                                      child: Material(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        elevation: 3,
+                                        child: Container(
+                                          width: 180.w,
+                                          height: 100.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.r),
+                                            image: DecorationImage(
+                                                image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${popularBrandsModel!.data![index].image}'),
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                                  itemCount: popularBrandsModel!.data!.length,
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              ),
+                            ) : Container(),
                       SizedBox(
                         height: 15.h,
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(right: 20.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Brands",
+                              "Popular Collections",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 20.sp),
                             ),
@@ -441,8 +437,198 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => AllBrandsScreen())));
+                                    MaterialPageRoute(builder: ((context) => AllCollectionsScreen(null))));
+                              },
+                              child: Text(
+                                "SEE ALL",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.sp,
+                                    color: depOrange),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: SizedBox(
+                          height: 115.h,
+                          child: ConditionalBuilder(
+                            condition: popularCollectionsModel!.data!.isNotEmpty,
+                            fallback: (context) => Center(
+                                child: Text(
+                              "No Collections Found",
+                              style: TextStyle(fontSize: 20.sp),
+                            )),
+                            builder: (context) => ListView.separated(
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => CollectionScreen(popularCollectionsModel!.data![index].id))));
+                                },
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Container(
+                                      height: 110.h,
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        image: DecorationImage(
+                                            image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${popularCollectionsModel!.data![index].image}'),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 110.h,
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(255, 255, 255, .42),
+                                            Color.fromRGBO(128, 128, 128, .42)
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 150.w,
+                                      child: Text(
+                                        popularCollectionsModel!.data![index].name!.length > 20 ? popularCollectionsModel!.data![index].name!.toString().substring(0, 20) : popularCollectionsModel!.data![index].name.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                              itemCount: popularCollectionsModel!.data!.length,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Sales",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => AllSalesScreen())));
+                              },
+                              child: Text(
+                                "SEE ALL",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.sp,
+                                    color: depOrange),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: SizedBox(
+                          height: 115.h,
+                          child: ConditionalBuilder(
+                            condition: allSalesModel!.data!.isNotEmpty,
+                            fallback: (context) => Center(
+                                child: Text(
+                              "No Sales Found",
+                              style: TextStyle(fontSize: 20.sp),
+                            )),
+                            builder: (context) => ListView.separated(
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: ((context) => SaleScreen(allSalesModel!.data![index].id))));
+                                },
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Container(
+                                      height: 110.h,
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        image: DecorationImage(
+                                            image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${allSalesModel!.data![index].image}'),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 110.h,
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(255, 255, 255, .42),
+                                            Color.fromRGBO(128, 128, 128, .42)
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 150.w,
+                                      child: Text(
+                                        allSalesModel!.data![index].name!.length > 20 ? allSalesModel!.data![index].name!.toString().substring(0, 20) : allSalesModel!.data![index].name.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+                              itemCount: allSalesModel!.data!.length,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Brands",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: ((context) => AllBrandsScreen())));
                               },
                               child: Text(
                                 "SEE ALL",
@@ -491,11 +677,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: 15.h,
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(right: 20.w),
                         child: Row(

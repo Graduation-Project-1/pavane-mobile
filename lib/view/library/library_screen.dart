@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +9,6 @@ import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
 import '../../constants/product_card.dart';
-import '../../models/AllBrandsModel.dart';
-import '../../models/AllCollectionsModel.dart';
-import '../../models/AllProductsModel.dart';
 import '../../models/LikedBrandsModel.dart';
 import '../../models/LikedCollectionsModel.dart';
 import '../../models/LikedProductsModel.dart';
@@ -240,7 +239,7 @@ class _LikesState extends State<Likes> {
             get_liked_brands = true;
           }
         },
-        builder: (context, state){
+        builder: (context, state) {
           return Padding(
             padding: EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10.h),
             child: ConditionalBuilder(
@@ -352,26 +351,29 @@ class _LikesState extends State<Likes> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.h),
                       child: SizedBox(
-                        height: 85.h,
+                        height: 90.h,
                         child: ConditionalBuilder(
                           condition: likedBrandsModel!.likedBrands!.isNotEmpty,
                           fallback: (context) => Center(child: Text("No Liked Brands Added Yet", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),)),
                           builder: (context) => ListView.separated(
-                            itemBuilder: (context, index) => InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(likedBrandsModel!.likedBrands![index].id.toString()))));
-                              },
-                              child: Material(
-                                borderRadius: BorderRadius.circular(10.r),
-                                elevation: 3,
-                                child: Container(
-                                  width: 170.w,
-                                  height: 80.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    image: DecorationImage(
-                                        image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${likedBrandsModel!.likedBrands![index].image}'),
-                                        fit: BoxFit.cover
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: ((context) => BrandProfileScreen(likedBrandsModel!.likedBrands![index].id.toString()))));
+                                },
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  elevation: 3,
+                                  child: Container(
+                                    width: 170.w,
+                                    height: 80.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      image: DecorationImage(
+                                          image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${likedBrandsModel!.likedBrands![index].image}'),
+                                          fit: BoxFit.cover
+                                      ),
                                     ),
                                   ),
                                 ),

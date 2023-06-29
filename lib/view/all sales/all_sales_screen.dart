@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, non_constant_identifier_names
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -8,25 +8,18 @@ import '../../Helper/Cache_helper.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
-import '../collection/collection_screen.dart';
+import '../sale/sale_screen.dart';
 
-class AllCollectionsScreen extends StatefulWidget {
-
-  var brand_id;
-  AllCollectionsScreen(this.brand_id);
+class AllSalesScreen extends StatefulWidget {
 
   @override
-  State<AllCollectionsScreen> createState() => _AllCollectionsScreenState(brand_id);
+  State<AllSalesScreen> createState() => _AllSalesScreenState();
 }
 
-class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
+class _AllSalesScreenState extends State<AllSalesScreen> {
 
-  var brand_id;
-  _AllCollectionsScreenState(this.brand_id);
-
-  bool get_all_collections = false;
+  bool get_all_sales = false;
   var access_token = CacheHelper.getData(key: 'access_token');
-
   int page = 1;
   int totalPages = 0;
   final scrollcontroller = ScrollController();
@@ -36,34 +29,21 @@ class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
   @override
   void initState() {
     super.initState();
-    if(brand_id == null){
-      AppCubit.get(context).GetAllCollections(page: page.toString(), token: access_token);
-    }else{
-      AppCubit.get(context).GetCollectionsByBrand(token: access_token, brand_id: brand_id, page: page);
-    }
+    AppCubit.get(context).GetAllSales(page: 1, token: access_token);
     scrollcontroller.addListener(_scrollListener);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state){
-        if(state is GetAllCollectionsSuccessState){
+        if(state is GetAllSalesSuccessState){
           for (final e in state.allCollectionsModel.data!){
             list.add(e.toJson());
           }
           isLoadingMore = false;
           totalPages = (state.allCollectionsModel.totalResult!/10).ceil();
-          get_all_collections = true;
-        }
-        if(state is GetPopularCollectionsSuccessState){
-          for (final e in state.allCollectionsModel.data!){
-            list.add(e.toJson());
-          }
-          isLoadingMore = false;
-          totalPages = (state.allCollectionsModel.totalResult!/10).ceil();
-          get_all_collections = true;
+          get_all_sales = true;
         }
       },
       builder: (context, state){
@@ -76,7 +56,7 @@ class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
               color: depOrange,
             ),
             title: Text(
-              'All Collections',
+              'All Sales',
               style: TextStyle(
                   color: depOrange,
                   fontSize: 35.sp,
@@ -87,7 +67,7 @@ class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
           body: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ConditionalBuilder(
-              condition: get_all_collections,
+              condition: get_all_sales,
               fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
               builder: (context) => GridView.builder(
                 controller: scrollcontroller,
@@ -99,7 +79,7 @@ class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) => CollectionScreen(list[index]['_id']))));
+                          Navigator.push(context, MaterialPageRoute(builder: ((context) => SaleScreen(list[index]["_id"]))));
                         },
                         child: Stack(
                           alignment: Alignment.center,
@@ -158,9 +138,8 @@ class _AllCollectionsScreenState extends State<AllCollectionsScreen> {
           isLoadingMore = true;
         });
         page = page + 1;
-        AppCubit.get(context).GetAllCollections(page: page.toString(), token: access_token);
+        AppCubit.get(context).GetAllSales(page: page.toString(), token: access_token);
       }
     }
   }
-
 }

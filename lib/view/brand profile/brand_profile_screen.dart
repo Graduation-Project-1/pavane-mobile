@@ -143,7 +143,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 380.h,
+                      height: 400.h,
                       width: double.infinity,
                       child: Stack(
                         children: [
@@ -153,9 +153,8 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40.r), bottomRight: Radius.circular(40.r)),
                               image: DecorationImage(
-                                  // image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.coverImage}'),
-                                image: AssetImage("assets/images/zara_logo.png"),
-                                  fit: BoxFit.cover
+                                  image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.coverImage}'),
+                                  fit: BoxFit.contain
                               ),
                             ),
                           ),
@@ -185,8 +184,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25.r),
                                     image: DecorationImage(
-                                      // image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.image}'),
-                                        image: AssetImage("assets/images/zara_logo.png"),
+                                      image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.image}'),
                                         fit: BoxFit.cover
                                     ),
                                   ),
@@ -504,8 +502,7 @@ class _BrandProfileScreenState extends State<BrandProfileScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30.r),
                                     image: DecorationImage(
-                                        // image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.categoryList![index].image.toString()}'),
-                                        image: AssetImage("assets/images/zara_logo.png"),
+                                        image: NetworkImage('https://graduation-project-23.s3.amazonaws.com/${brandModel!.data!.categoryList![index].image.toString()}'),
                                         fit: BoxFit.cover
                                     ),
                                   ),

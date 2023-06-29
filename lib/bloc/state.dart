@@ -4,6 +4,7 @@ import 'package:pavane/models/ReviewModel.dart';
 import '../models/AllBrandsModel.dart';
 import '../models/AllCategoriesModel.dart';
 import '../models/AllCollectionsModel.dart';
+import '../models/AllNotificationModel.dart';
 import '../models/AllProductsModel.dart';
 import '../models/BrandModel.dart';
 import '../models/CollectionModel.dart';
@@ -13,6 +14,7 @@ import '../models/LikedProductsModel.dart';
 import '../models/LoginModel.dart';
 import '../models/ProductModel.dart';
 import '../models/RegisterModel.dart';
+import '../models/SubscribeModel.dart';
 import '../models/UserModel.dart';
 
 abstract class AppStates {}
@@ -33,7 +35,6 @@ class LoginErrorState extends AppStates {
   LoginErrorState(this.error);
 }
 
-
 class RegisterLoadingState extends AppStates {}
 
 class RegisterSuccessState extends AppStates {
@@ -45,7 +46,6 @@ class RegisterErrorState extends AppStates {
   final String error;
   RegisterErrorState(this.error);
 }
-
 
 class GetUserDataLoadingState extends AppStates {}
 
@@ -78,7 +78,7 @@ class GetAllProductsSuccessState extends AppStates {
   GetAllProductsSuccessState(this.allProductsModel);
 }
 
-class  GetAllProductsErrorState extends AppStates {
+class GetAllProductsErrorState extends AppStates {
   final String error;
   GetAllProductsErrorState(this.error);
 }
@@ -90,7 +90,7 @@ class GetProductSuccessState extends AppStates {
   GetProductSuccessState(this.productModel);
 }
 
-class  GetProductErrorState extends AppStates {
+class GetProductErrorState extends AppStates {
   final String error;
   GetProductErrorState(this.error);
 }
@@ -99,7 +99,7 @@ class LikeProductLoadingState extends AppStates {}
 
 class LikeProductSuccessState extends AppStates {}
 
-class  LikeProductErrorState extends AppStates {
+class LikeProductErrorState extends AppStates {
   final String error;
   LikeProductErrorState(this.error);
 }
@@ -111,7 +111,7 @@ class GetPopularProductsSuccessState extends AppStates {
   GetPopularProductsSuccessState(this.allProductsModel);
 }
 
-class  GetPopularProductsErrorState extends AppStates {
+class GetPopularProductsErrorState extends AppStates {
   final String error;
   GetPopularProductsErrorState(this.error);
 }
@@ -123,7 +123,7 @@ class GetLikedProductsSuccessState extends AppStates {
   GetLikedProductsSuccessState(this.likedProductsModel);
 }
 
-class  GetLikedProductsErrorState extends AppStates {
+class GetLikedProductsErrorState extends AppStates {
   final String error;
   GetLikedProductsErrorState(this.error);
 }
@@ -135,11 +135,10 @@ class GetPopularBrandsSuccessState extends AppStates {
   GetPopularBrandsSuccessState(this.allBrandsModel);
 }
 
-class  GetPopularBrandsErrorState extends AppStates {
+class GetPopularBrandsErrorState extends AppStates {
   final String error;
   GetPopularBrandsErrorState(this.error);
 }
-
 
 class GetAllBrandsLoadingState extends AppStates {}
 
@@ -148,7 +147,7 @@ class GetAllBrandsSuccessState extends AppStates {
   GetAllBrandsSuccessState(this.allBrandsModel);
 }
 
-class  GetAllBrandsErrorState extends AppStates {
+class GetAllBrandsErrorState extends AppStates {
   final String error;
   GetAllBrandsErrorState(this.error);
 }
@@ -160,7 +159,7 @@ class GetLikedBrandsSuccessState extends AppStates {
   GetLikedBrandsSuccessState(this.likedBrandsModel);
 }
 
-class  GetLikedBrandsErrorState extends AppStates {
+class GetLikedBrandsErrorState extends AppStates {
   final String error;
   GetLikedBrandsErrorState(this.error);
 }
@@ -172,7 +171,7 @@ class GetBrandDetailsSuccessState extends AppStates {
   GetBrandDetailsSuccessState(this.brandModel);
 }
 
-class  GetBrandDetailsErrorState extends AppStates {
+class GetBrandDetailsErrorState extends AppStates {
   final String error;
   GetBrandDetailsErrorState(this.error);
 }
@@ -181,7 +180,7 @@ class LikeBrandLoadingState extends AppStates {}
 
 class LikeBrandSuccessState extends AppStates {}
 
-class  LikeBrandErrorState extends AppStates {
+class LikeBrandErrorState extends AppStates {
   final String error;
   LikeBrandErrorState(this.error);
 }
@@ -193,7 +192,7 @@ class GetPopularCollectionsSuccessState extends AppStates {
   GetPopularCollectionsSuccessState(this.allCollectionsModel);
 }
 
-class  GetPopularCollectionsErrorState extends AppStates {
+class GetPopularCollectionsErrorState extends AppStates {
   final String error;
   GetPopularCollectionsErrorState(this.error);
 }
@@ -205,7 +204,7 @@ class GetLikedCollectionsSuccessState extends AppStates {
   GetLikedCollectionsSuccessState(this.likedCollectionsModel);
 }
 
-class  GetLikedCollectionsErrorState extends AppStates {
+class GetLikedCollectionsErrorState extends AppStates {
   final String error;
   GetLikedCollectionsErrorState(this.error);
 }
@@ -217,11 +216,10 @@ class GetAllCollectionsSuccessState extends AppStates {
   GetAllCollectionsSuccessState(this.allCollectionsModel);
 }
 
-class  GetAllCollectionsErrorState extends AppStates {
+class GetAllCollectionsErrorState extends AppStates {
   final String error;
   GetAllCollectionsErrorState(this.error);
 }
-
 
 class GetCollectionLoadingState extends AppStates {}
 
@@ -230,7 +228,7 @@ class GetCollectionSuccessState extends AppStates {
   GetCollectionSuccessState(this.collectionModel);
 }
 
-class  GetCollectionErrorState extends AppStates {
+class GetCollectionErrorState extends AppStates {
   final String error;
   GetCollectionErrorState(this.error);
 }
@@ -251,7 +249,7 @@ class GetAdsSuccessState extends AppStates {
   GetAdsSuccessState(this.adsModel);
 }
 
-class  GetAdsErrorState extends AppStates {
+class GetAdsErrorState extends AppStates {
   final String error;
   GetAdsErrorState(this.error);
 }
@@ -263,7 +261,7 @@ class GetProductReviewsSuccessState extends AppStates {
   GetProductReviewsSuccessState(this.reviewModel);
 }
 
-class  GetProductReviewsErrorState extends AppStates {
+class GetProductReviewsErrorState extends AppStates {
   final String error;
   GetProductReviewsErrorState(this.error);
 }
@@ -293,7 +291,73 @@ class GetBrandReviewsSuccessState extends AppStates {
   GetBrandReviewsSuccessState(this.reviewModel);
 }
 
-class  GetBrandReviewsErrorState extends AppStates {
+class GetBrandReviewsErrorState extends AppStates {
   final String error;
   GetBrandReviewsErrorState(this.error);
+}
+
+class GetAllSalesLoadingState extends AppStates {}
+
+class GetAllSalesSuccessState extends AppStates {
+  final AllCollectionsModel allCollectionsModel;
+  GetAllSalesSuccessState(this.allCollectionsModel);
+}
+
+class GetAllSalesErrorState extends AppStates {
+  final String error;
+  GetAllSalesErrorState(this.error);
+}
+
+class GetSalesLoadingState extends AppStates {}
+
+class GetSalesSuccessState extends AppStates {
+  final CollectionModel collectionModel;
+  GetSalesSuccessState(this.collectionModel);
+}
+
+class GetSalesErrorState extends AppStates {
+  final String error;
+  GetSalesErrorState(this.error);
+}
+
+class UploadUserImageLoadingState extends AppStates {}
+
+class UploadUserImageSuccessState extends AppStates {}
+
+class UploadUserImageErrorState extends AppStates {
+  final String error;
+  UploadUserImageErrorState(this.error);
+}
+
+class EditUserDataLoadingState extends AppStates {}
+
+class EditUserDataSuccessState extends AppStates {}
+
+class EditUserDataErrorState extends AppStates {
+  final String error;
+  EditUserDataErrorState(this.error);
+}
+
+class GetNotificationLoadingState extends AppStates {}
+
+class GetNotificationSuccessState extends AppStates {
+  final AllNotificationModel allNotificationModel;
+  GetNotificationSuccessState(this.allNotificationModel);
+}
+
+class GetNotificationErrorState extends AppStates {
+  final String error;
+  GetNotificationErrorState(this.error);
+}
+
+class SubscribeLoadingState extends AppStates {}
+
+class SubscribeSuccessState extends AppStates {
+  final SubscribeModel subscribeModel;
+  SubscribeSuccessState(this.subscribeModel);
+}
+
+class SubscribeErrorState extends AppStates {
+  final String error;
+  SubscribeErrorState(this.error);
 }

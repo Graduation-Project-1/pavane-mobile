@@ -70,8 +70,7 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
                     onTap: () {
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: ((context) => RegisterScreen())));
+                          MaterialPageRoute(builder: ((context) => RegisterScreen())));
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -82,8 +81,7 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
                               bottomLeft: Radius.circular(10.r),
                               bottomRight: Radius.circular(20.r))),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         child: Text(
                           "Register",
                           style: TextStyle(color: white, fontSize: 20.sp),
@@ -95,12 +93,10 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
                     onTap: () {
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: ((context) => LoginScreen())));
+                          MaterialPageRoute(builder: ((context) => LoginScreen())));
                     },
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 15, bottom: 15, left: 30),
+                      padding: const EdgeInsets.only(top: 15, bottom: 15, left: 30),
                       child: Text(
                         "Login",
                         style: TextStyle(color: depOrange, fontSize: 20.sp),

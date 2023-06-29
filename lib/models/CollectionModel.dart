@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 class CollectionModel {
   CollectionModel({
       this.success, 
@@ -73,8 +75,8 @@ class Data {
   String? date;
   int? numberOfReviews;
   int? numberOfLikes;
-  int? averageRate;
-  int? discountRate;
+  var averageRate;
+  var discountRate;
   List<ItemsList>? itemsList;
   List<CategoryList>? categoryList;
   BrandId? brandId;
@@ -140,7 +142,7 @@ class BrandId {
   String? role;
   int? numberOfLikes;
   int? numberOfReviews;
-  int? averageRate;
+  var averageRate;
   List<String>? phone;
   List<String>? categoryList;
   String? image;

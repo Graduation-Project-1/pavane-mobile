@@ -558,21 +558,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                             ),
-                            items: genderItems
-                                .map((item) => DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(
-                                        item,
-                                        style: TextStyle(
-                                          fontSize: 20.sp,
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
+                            items: genderItems.map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                            )).toList(),
                             onSaved: (value) {
                               gender = value.toString();
                             },
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              gender = value.toString();
+                            },
                           ),
                         ),
                         SizedBox(

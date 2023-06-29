@@ -182,7 +182,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: 250,
+                                    width: 220.w,
                                     child: Text(
                                       productModel!.data!.name.toString(),
                                       style: TextStyle(
