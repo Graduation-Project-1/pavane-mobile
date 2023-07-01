@@ -12,6 +12,7 @@ import '../../constants/product_card.dart';
 import '../../models/LikedBrandsModel.dart';
 import '../../models/LikedCollectionsModel.dart';
 import '../../models/LikedProductsModel.dart';
+import '../../models/RecommendationsModel.dart';
 import '../brand profile/brand_profile_screen.dart';
 import '../collection/collection_screen.dart';
 import '../search/search_screen.dart';
@@ -404,15 +405,45 @@ class ForYou extends StatefulWidget {
 }
 
 class _ForYouState extends State<ForYou> {
+
+  RecommendationsModel? recommendationsModel;
+  bool get = false;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Coming Soon',
-        style: TextStyle(
-            color: depOrange,
-            fontSize: 35.sp,
-            fontFamily: "Roller"
+    return BlocProvider(
+      create: (BuildContext context) => AppCubit()..GetRecommendations(token: access_token),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state){
+          if(state is GetRecommendationsSuccessState){
+            recommendationsModel = state.recommendationsModel;
+            get = true;
+          }
+        },
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ConditionalBuilder(
+            condition: get,
+            fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
+            builder: (context) => GridView.builder(
+              itemCount: recommendationsModel!.data!.itemList!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .75),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CardBuilder(
+                    context: context,
+                    image: recommendationsModel!.data!.itemList![index].images![0],
+                    name: recommendationsModel!.data!.itemList![index].name.toString(),
+                    price: recommendationsModel!.data!.itemList![index].price.toString(),
+                    rate: recommendationsModel!.data!.itemList![index].averageRate.toString(),
+                    id: recommendationsModel!.data!.itemList![index].id.toString(),
+                    brand: "",
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

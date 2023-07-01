@@ -17,6 +17,7 @@ import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
 import '../models/LoginModel.dart';
 import '../models/ProductModel.dart';
+import '../models/RecommendationsModel.dart';
 import '../models/RegisterModel.dart';
 import '../models/ReviewModel.dart';
 import '../models/SubscribeModel.dart';
@@ -806,4 +807,23 @@ class AppCubit extends Cubit<AppStates> {
   }
 
 
+  RecommendationsModel? recommendationsModel;
+
+  void GetRecommendations({
+    required String token,
+  }) {
+    emit(GetRecommendationsLoadingState());
+    DioHelper.getData(
+      url: 'getRecommendation',
+      token: token,
+    ).then((value) {
+      recommendationsModel = RecommendationsModel.fromJson(value.data);
+      emit(GetRecommendationsSuccessState(recommendationsModel!));
+    }).catchError((error) {
+      emit(GetRecommendationsErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
 }

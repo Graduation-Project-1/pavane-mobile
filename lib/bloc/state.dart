@@ -13,6 +13,7 @@ import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
 import '../models/LoginModel.dart';
 import '../models/ProductModel.dart';
+import '../models/RecommendationsModel.dart';
 import '../models/RegisterModel.dart';
 import '../models/SubscribeModel.dart';
 import '../models/UserModel.dart';
@@ -360,4 +361,16 @@ class SubscribeSuccessState extends AppStates {
 class SubscribeErrorState extends AppStates {
   final String error;
   SubscribeErrorState(this.error);
+}
+
+class GetRecommendationsLoadingState extends AppStates {}
+
+class GetRecommendationsSuccessState extends AppStates {
+  final RecommendationsModel recommendationsModel;
+  GetRecommendationsSuccessState(this.recommendationsModel);
+}
+
+class GetRecommendationsErrorState extends AppStates {
+  final String error;
+  GetRecommendationsErrorState(this.error);
 }
