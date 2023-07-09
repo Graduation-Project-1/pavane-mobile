@@ -84,6 +84,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 fontSize: 16.0
             );
           }
+          if(state is AddToFittingRoomSuccessState){
+            Fluttertoast.showToast(
+                msg: "Product added to fitting room",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          if(state is AddToFittingRoomErrorState){
+            AppCubit.get(context).RomoveFromFittingRoom(token: access_token, id: access_token);
+          }
+          if(state is RomoveFromFittingRoomSuccessState){
+            Fluttertoast.showToast(
+                msg: "Product removed from fitting room",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
           if(state is AddProductReviewSuccessState){
             Fluttertoast.showToast(
                 msg: "Review Added",
@@ -157,7 +182,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               onPressed: (){
                                 AppCubit.get(context).LikeProduct(token: access_token, id: product_id);
                               },
-                              icon: const Icon(Icons.favorite_border),
+                              icon: productModel!.data!.isLiked? const Icon(Icons.favorite, color: depOrange,) : const Icon(Icons.favorite_border),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if(productModel!.data!.hasModel) Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 90),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: (){
+                                AppCubit.get(context).AddToFittingRoom(token: access_token, id: product_id);
+                              },
+                              icon: const ImageIcon(AssetImage("assets/images/fitting.png")),
                             ),
                           ],
                         ),
@@ -182,7 +221,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: 220.w,
+                                    width: 210.w,
                                     child: Text(
                                       productModel!.data!.name.toString(),
                                       style: TextStyle(

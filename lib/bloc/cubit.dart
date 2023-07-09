@@ -12,6 +12,7 @@ import '../models/AllNotificationModel.dart';
 import '../models/AllProductsModel.dart';
 import '../models/BrandModel.dart';
 import '../models/CollectionModel.dart';
+import '../models/FittingRoomItemsModel.dart';
 import '../models/LikedBrandsModel.dart';
 import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
@@ -826,4 +827,63 @@ class AppCubit extends Cubit<AppStates> {
       print("******************************");
     });
   }
+
+  void AddToFittingRoom({
+    required String token,
+    required String id,
+  }) {
+    emit(AddToFittingRoomLoadingState());
+    DioHelper.putData(
+      url: 'selectItem/$id',
+      token: token,
+      data: {},
+    ).then((value) {
+      emit(AddToFittingRoomSuccessState());
+    }).catchError((error) {
+      emit(AddToFittingRoomErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  void RomoveFromFittingRoom({
+    required String token,
+    required String id,
+  }) {
+    emit(RomoveFromFittingRoomLoadingState());
+    DioHelper.putData(
+      url: 'removeItem/$id',
+      token: token,
+      data: {},
+    ).then((value) {
+      emit(RomoveFromFittingRoomSuccessState());
+    }).catchError((error) {
+      emit(RomoveFromFittingRoomErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
+  FittingRoomItemsModel? fittingRoomItemsModel;
+
+  void GetFittingRoom({
+    required String token,
+  }) {
+    emit(GetFittingRoomLoadingState());
+    DioHelper.getData(
+      url: 'getSelectedItems',
+      token: token,
+    ).then((value) {
+      fittingRoomItemsModel = FittingRoomItemsModel.fromJson(value.data);
+      emit(GetFittingRoomSuccessState(fittingRoomItemsModel!));
+    }).catchError((error) {
+      emit(GetFittingRoomErrorState(error.response.data['message'].toString()));
+      print("******************************");
+      print(error.response.data.toString());
+      print("******************************");
+    });
+  }
+
 }

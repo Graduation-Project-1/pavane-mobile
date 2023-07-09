@@ -9,6 +9,7 @@ import '../../bloc/cubit.dart';
 import '../../bloc/state.dart';
 import '../../constants/colors.dart';
 import '../../constants/product_card.dart';
+import '../../models/FittingRoomItemsModel.dart';
 import '../../models/LikedBrandsModel.dart';
 import '../../models/LikedCollectionsModel.dart';
 import '../../models/LikedProductsModel.dart';
@@ -189,15 +190,45 @@ class FittingRoom extends StatefulWidget {
 }
 
 class _FittingRoomState extends State<FittingRoom> {
+
+  bool getFittingRoomItems = false;
+  FittingRoomItemsModel? fittingRoomItemsModel;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Coming Soon',
-        style: TextStyle(
-            color: depOrange,
-            fontSize: 35.sp,
-            fontFamily: "Roller"
+    return BlocProvider(
+      create: (BuildContext context) => AppCubit()..GetFittingRoom(token: access_token),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state){
+          if(state is GetFittingRoomSuccessState){
+            fittingRoomItemsModel = state.fittingRoomItemsModel;
+            getFittingRoomItems = true;
+          }
+        },
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ConditionalBuilder(
+            condition: getFittingRoomItems,
+            fallback: (context) => Center(child: Image.asset("assets/images/loader.gif", scale: .7,)),
+            builder: (context) => GridView.builder(
+              itemCount: fittingRoomItemsModel!.data!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: .75),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CardBuilder(
+                    context: context,
+                    image: fittingRoomItemsModel!.data![index].images![0],
+                    name: fittingRoomItemsModel!.data![index].name.toString(),
+                    price: fittingRoomItemsModel!.data![index].price.toString(),
+                    rate: null,
+                    id: fittingRoomItemsModel!.data![index].id.toString(),
+                    brand: "",
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

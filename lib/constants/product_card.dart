@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../view/product details/product_details_screen.dart';
 import 'colors.dart';
 
-Widget CardBuilder({required BuildContext context, required String image, required String name, required String price, required String rate, required String id, required String brand}){
+Widget CardBuilder({required BuildContext context, required String image, required String name, required String price, String? rate, required String id, required String brand}){
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
     child: InkWell(
@@ -69,7 +69,7 @@ Widget CardBuilder({required BuildContext context, required String image, requir
                                 fontWeight: FontWeight.bold
                             ),
                           ),
-                          Row(
+                          if(rate != null) Row(
                             children: [
                               Text(
                                 rate.length > 3 ? rate.substring(0, 3) : rate,

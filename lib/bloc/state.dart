@@ -8,6 +8,7 @@ import '../models/AllNotificationModel.dart';
 import '../models/AllProductsModel.dart';
 import '../models/BrandModel.dart';
 import '../models/CollectionModel.dart';
+import '../models/FittingRoomItemsModel.dart';
 import '../models/LikedBrandsModel.dart';
 import '../models/LikedCollectionsModel.dart';
 import '../models/LikedProductsModel.dart';
@@ -373,4 +374,34 @@ class GetRecommendationsSuccessState extends AppStates {
 class GetRecommendationsErrorState extends AppStates {
   final String error;
   GetRecommendationsErrorState(this.error);
+}
+
+class AddToFittingRoomLoadingState extends AppStates {}
+
+class AddToFittingRoomSuccessState extends AppStates {}
+
+class AddToFittingRoomErrorState extends AppStates {
+  final String error;
+  AddToFittingRoomErrorState(this.error);
+}
+
+class RomoveFromFittingRoomLoadingState extends AppStates {}
+
+class RomoveFromFittingRoomSuccessState extends AppStates {}
+
+class RomoveFromFittingRoomErrorState extends AppStates {
+  final String error;
+  RomoveFromFittingRoomErrorState(this.error);
+}
+
+class GetFittingRoomLoadingState extends AppStates {}
+
+class GetFittingRoomSuccessState extends AppStates {
+  final FittingRoomItemsModel fittingRoomItemsModel;
+  GetFittingRoomSuccessState(this.fittingRoomItemsModel);
+}
+
+class GetFittingRoomErrorState extends AppStates {
+  final String error;
+  GetFittingRoomErrorState(this.error);
 }
